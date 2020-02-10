@@ -9,7 +9,11 @@ my little forum
 System requirements
 -------------------
 
-* Webserver with PHP >= 5.4 and MySQL >= 5.5.3
+* Webserver with PHP >= 5.4 and MySQL >= 5.5.3 and < 7.3
+
+**Attention**
+
+Because of changes in PRCE 2 that got introduced in PHP 7.3 the forum script currently fails to check for valid e-mail-addresses. We have a proper fix in the pipeline for My Little Forum 2.5. If you want to run your forum under PHP 7.3 or newer, please read https://mylittleforum.net/forum/index.php?id=12129 (last paragraphs and followups).
 
 Installation
 ------------
