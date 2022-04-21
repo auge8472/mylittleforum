@@ -403,13 +403,6 @@ function convertlinebreaks($string) {
 /**
  * makes inlinecode replacements
  */
-function parse_monospace($string)
- {
-  $string = nl2br(htmlspecialchars($string));
-  $string = str_replace("  ", "&nbsp; ", $string);
-  $string = str_replace("  ", " &nbsp;", $string);
-  return $string;
- }
 function bbcode_stripcontents($string) {
 	return preg_replace ("/[^\n]/", '', $string);
 }
@@ -440,6 +433,12 @@ function is_valid_url($url)
  * @return bool
  */
 function parse_inlinecode($string) {
+	$string = nl2br(htmlspecialchars($string));
+	$string = str_replace("  ", "&nbsp; ", $string);
+	$string = str_replace("  ", " &nbsp;", $string);
+	return $string;
+}
+function parse_monospace($string) {
 	$string = nl2br(htmlspecialchars($string));
 	$string = str_replace("  ", "&nbsp; ", $string);
 	$string = str_replace("  ", " &nbsp;", $string);
