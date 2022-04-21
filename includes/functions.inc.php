@@ -338,11 +338,8 @@ function get_thread_items($child_array, $id, $current) {
 }
 
 /**
- * unifies line breaks
  * returns an array for the page navigation
  *
- * @param string $string
- * @return string
  * @param int $page_count : number of pages
  * @param int $page : current page
  * @param int $browse_range
@@ -350,10 +347,6 @@ function get_thread_items($child_array, $id, $current) {
  * @param int $show_last
  * @return array
  */
-function convertlinebreaks($string)
- {
-  return preg_replace ("/\015\012|\015|\012/", "\n", $string);
- }
 function pagination($page_count, $page, $browse_range = 3, $show_last = 1) {
 	if ($page_count > 1) {
 		$xpagination['current'] = $page;
@@ -403,6 +396,9 @@ function bbcode_stripcontents($string)
 
 /**
  * makes inlinecode replacements
+ * unifies line breaks
+ * @param string $string
+ * @return string
  */
 function parse_inlinecode($string)
  {
@@ -411,6 +407,9 @@ function parse_inlinecode($string)
   $string = str_replace("  ", " &nbsp;", $string);
   return $string;
  }
+function convertlinebreaks($string) {
+	return preg_replace ("/\015\012|\015|\012/", "\n", $string);
+}
 
 /**
  * makes inlinecode replacements
