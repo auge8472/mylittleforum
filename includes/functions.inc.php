@@ -396,13 +396,6 @@ function make_link($string) {
  * @param string $string
  * @return string
  */
-function parse_inlinecode($string)
- {
-  $string = nl2br(htmlspecialchars($string));
-  $string = str_replace("  ", "&nbsp; ", $string);
-  $string = str_replace("  ", " &nbsp;", $string);
-  return $string;
- }
 function convertlinebreaks($string) {
 	return preg_replace ("/\015\012|\015|\012/", "\n", $string);
 }
@@ -446,6 +439,12 @@ function is_valid_url($url)
  * @param string $email
  * @return bool
  */
+function parse_inlinecode($string) {
+	$string = nl2br(htmlspecialchars($string));
+	$string = str_replace("  ", "&nbsp; ", $string);
+	$string = str_replace("  ", " &nbsp;", $string);
+	return $string;
+}
 function is_valid_email($email) {
 	if (!preg_match("/^([\w\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,}|[0-9]{1,3})(\]?)$/", $email)) {
 		return false;
