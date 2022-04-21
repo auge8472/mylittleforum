@@ -316,18 +316,6 @@ function save_read_status($connid, $user_id, $entry_id) {
  * @param int $id
  * @param int $current
  */
-function get_thread_items($child_array, $id, $current)
- {
-  global $thread_items;
-  $thread_items[] = $id;  
-  if(isset($child_array[$id]) && is_array($child_array[$id]))
-   {
-    foreach($child_array[$id] as $child)
-     {
-      get_thread_items($child_array, $child, $current);
-     }
-   }
- }
 
 /**
  * returns an array for the page navigation
@@ -392,6 +380,15 @@ function make_link($string)
   $string = my_substr($string, 1, my_strlen($string, CHARSET), CHARSET);
   return $string;
  }
+function get_thread_items($child_array, $id, $current) {
+	global $thread_items;
+	$thread_items[] = $id;  
+	if (isset($child_array[$id]) && is_array($child_array[$id])) {
+		foreach ($child_array[$id] as $child) {
+			get_thread_items($child_array, $child, $current);
+		}
+	}
+}
 
 /**
  * unifies line breaks
