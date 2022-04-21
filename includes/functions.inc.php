@@ -21,23 +21,23 @@ function connect_db($host, $user, $pw, $db) {
 }
 
 /**
- * logs a user out, saves log out time and removes user from user online table
- *
- * @param int $user_id
- * @param string $mode
- */
-function log_out($user_id,$mode='')
- {
-  global $connid, $settings, $db_settings;
-  if(isset($_SESSION[$settings['session_prefix'].'usersettings']['newtime'])) setcookie($settings['session_prefix'].'last_visit',$_SESSION[$settings['session_prefix'].'usersettings']['newtime'].'.'.$_SESSION[$settings['session_prefix'].'usersettings']['newtime'],$_SESSION[$settings['session_prefix'].'usersettings']['newtime']+(3600*24*$settings['cookie_validity_days']));
-  session_destroy();
-  $update_result = @mysqli_query($connid, "UPDATE ".$db_settings['userdata_table']." SET last_login=last_login, last_logout=NOW(), registered=registered, inactivity_notification = FALSE WHERE user_id=".intval($user_id)); // auto_login_code=''
-  setcookie($settings['session_prefix'].'auto_login','',0);
-  if($db_settings['useronline_table'] != '') @mysqli_query($connid, "DELETE FROM ".$db_settings['useronline_table']." WHERE ip = 'uid_".intval($user_id)."'");
-  if($mode!='') header('Location: index.php?mode='.$mode);
-  else header('Location: index.php');
-  exit;
- }
+* logs a user out, saves log out time and removes user from user online table
+*
+* @param int $user_id
+* @param string $mode
+*/
+function log_out($user_id, $mode = '') {
+	global $connid, $settings, $db_settings;
+	if (isset($_SESSION[$settings['session_prefix'].'usersettings']['newtime']))
+		setcookie($settings['session_prefix'].'last_visit',$_SESSION[$settings['session_prefix'].'usersettings']['newtime'].'.'.$_SESSION[$settings['session_prefix'].'usersettings']['newtime'],$_SESSION[$settings['session_prefix'].'usersettings']['newtime']+(3600*24*$settings['cookie_validity_days']));
+	session_destroy();
+	$update_result = @mysqli_query($connid, "UPDATE ".$db_settings['userdata_table']." SET last_login=last_login, last_logout=NOW(), registered=registered, inactivity_notification = FALSE WHERE user_id=".intval($user_id)); // auto_login_code=''
+	setcookie($settings['session_prefix'].'auto_login','',0);
+	if ($db_settings['useronline_table'] != '') @mysqli_query($connid, "DELETE FROM ".$db_settings['useronline_table']." WHERE ip = 'uid_".intval($user_id)."'");
+	if ($mode != '') header('Location: index.php?mode='.$mode);
+	else header('Location: index.php');
+	exit;
+}
 
 /**
  * counts failed logins in order to prevent brute-force attacs
