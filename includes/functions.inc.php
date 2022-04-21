@@ -318,53 +318,8 @@ function save_read_status($connid, $user_id, $entry_id) {
  */
 
 /**
- * returns an array for the page navigation
  *
- * @param int $page_count : number of pages
- * @param int $page : current page
- * @param int $browse_range
- * @param int $page
- * @param int $show_last
- * @return array
  */
-function pagination($page_count,$page,$browse_range=3,$show_last=1)
- {
-  if($page_count>1)
-   {
-    $xpagination['current'] = $page;
-    if($page_count > $page)
-     {
-      $xpagination['next'] = $page+1;
-     }
-    else
-     {
-      $xpagination['next'] = 0;
-     }
-    if($page > 1)
-     {
-      $xpagination['previous'] = $page-1;
-     }
-    else
-     {
-      $xpagination['previous'] = 0;
-     }
-    $xpagination['items'][] = 1;
-    if ($page > $browse_range+1) $xpagination['items'][] = 0;
-    $n_range = $page-($browse_range-1);
-    $p_range = $page+$browse_range;
-    for($page_browse=$n_range; $page_browse<$p_range; $page_browse++)
-     {
-      if($page_browse > 1 && $page_browse <= $page_count) $xpagination['items'][] = $page_browse;
-     }
-    if($show_last)
-     {
-      if($page < $page_count-($browse_range)) $xpagination['items'][] = 0;
-      if(!in_array($page_count,$xpagination['items'])) $xpagination['items'][] = $page_count;
-     }
-    return $xpagination;
-   }
-  return false;
- }
 
 /**
  * replaces urls with links
@@ -392,14 +347,49 @@ function get_thread_items($child_array, $id, $current) {
 
 /**
  * unifies line breaks
+ * returns an array for the page navigation
  *
  * @param string $string
  * @return string
+ * @param int $page_count : number of pages
+ * @param int $page : current page
+ * @param int $browse_range
+ * @param int $page
+ * @param int $show_last
+ * @return array
  */
 function convertlinebreaks($string)
  {
   return preg_replace ("/\015\012|\015|\012/", "\n", $string);
  }
+function pagination($page_count, $page, $browse_range = 3, $show_last = 1) {
+	if ($page_count > 1) {
+		$xpagination['current'] = $page;
+		if ($page_count > $page) {
+			$xpagination['next'] = $page + 1;
+		} else {
+			$xpagination['next'] = 0;
+		}
+		if ($page > 1) {
+			$xpagination['previous'] = $page - 1;
+		} else {
+			$xpagination['previous'] = 0;
+		}
+		$xpagination['items'][] = 1;
+		if ($page > $browse_range+1) $xpagination['items'][] = 0;
+		$n_range = $page-($browse_range - 1);
+		$p_range = $page + $browse_range;
+		for ($page_browse = $n_range; $page_browse < $p_range; $page_browse++) {
+			if ($page_browse > 1 && $page_browse <= $page_count) $xpagination['items'][] = $page_browse;
+		}
+		if ($show_last) {
+			if ($page < $page_count-($browse_range)) $xpagination['items'][] = 0;
+			if (!in_array($page_count,$xpagination['items'])) $xpagination['items'][] = $page_count;
+		}
+		return $xpagination;
+	}
+	return false;
+}
 
 /**
  * strips everything except new line symbol
