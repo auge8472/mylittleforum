@@ -233,38 +233,30 @@ function deleteUser($user_id = 0, $display_name = 'Unnamed') {
  *
  * @return array
  */
-function get_categories()
- {
-  global $settings, $connid, $db_settings;
-  $count_result = mysqli_query($connid, "SELECT COUNT(*) FROM ".$db_settings['category_table']);
-  list($category_count) = mysqli_fetch_row($count_result);
-  mysqli_free_result($count_result);
+function get_categories() {
+	global $settings, $connid, $db_settings;
+	$count_result = mysqli_query($connid, "SELECT COUNT(*) FROM ".$db_settings['category_table']);
+	list($category_count) = mysqli_fetch_row($count_result);
+	mysqli_free_result($count_result);
 
-  if($category_count > 0)
-   {
-    if (empty($_SESSION[$settings['session_prefix'].'user_id']))
-     {
-      $result = mysqli_query($connid, "SELECT id, category FROM ".$db_settings['category_table']." WHERE accession = 0 ORDER BY order_id ASC");
-     }
-    elseif (isset($_SESSION[$settings['session_prefix'].'user_id']) && isset($_SESSION[$settings['session_prefix'].'user_type']) && $_SESSION[$settings['session_prefix'].'user_type'] == 0)
-     {
-      $result = mysqli_query($connid, "SELECT id, category FROM ".$db_settings['category_table']." WHERE accession = 0 OR accession = 1 ORDER BY order_id ASC");
-     }
-    elseif (isset($_SESSION[$settings['session_prefix'].'user_id']) && isset($_SESSION[$settings['session_prefix'].'user_type']) && ($_SESSION[$settings['session_prefix'].'user_type'] == 1 || $_SESSION[$settings['session_prefix'].'user_type'] == 2))
-     {
-      $result = mysqli_query($connid, "SELECT id, category FROM ".$db_settings['category_table']." WHERE accession = 0 OR accession = 1 OR accession = 2 ORDER BY order_id ASC");
-     }
-    if(!$result) raise_error('database_error',mysqli_error($connid));
-    $categories[0]='';
-    while ($line = mysqli_fetch_array($result))
-     {
-      $categories[$line['id']] = htmlspecialchars($line['category']);
-     }
-    mysqli_free_result($result);
-    return $categories;
-   }
-  else return false;
- }
+	if ($category_count > 0) {
+		if (empty($_SESSION[$settings['session_prefix'].'user_id'])) {
+			$result = mysqli_query($connid, "SELECT id, category FROM ".$db_settings['category_table']." WHERE accession = 0 ORDER BY order_id ASC");
+		} elseif (isset($_SESSION[$settings['session_prefix'].'user_id']) && isset($_SESSION[$settings['session_prefix'].'user_type']) && $_SESSION[$settings['session_prefix'].'user_type'] == 0) {
+			$result = mysqli_query($connid, "SELECT id, category FROM ".$db_settings['category_table']." WHERE accession = 0 OR accession = 1 ORDER BY order_id ASC");
+		} elseif (isset($_SESSION[$settings['session_prefix'].'user_id']) && isset($_SESSION[$settings['session_prefix'].'user_type']) && ($_SESSION[$settings['session_prefix'].'user_type'] == 1 || $_SESSION[$settings['session_prefix'].'user_type'] == 2)) {
+			$result = mysqli_query($connid, "SELECT id, category FROM ".$db_settings['category_table']." WHERE accession = 0 OR accession = 1 OR accession = 2 ORDER BY order_id ASC");
+		}
+		if (!$result) raise_error('database_error', mysqli_error($connid));
+		$categories[0] = '';
+		while ($line = mysqli_fetch_array($result)) {
+			$categories[$line['id']] = htmlspecialchars($line['category']);
+		}
+		mysqli_free_result($result);
+		return $categories;
+	}
+	else return false;
+}
 
 /**
  * returns all available catgory ids
