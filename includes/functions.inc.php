@@ -21,11 +21,11 @@ function connect_db($host, $user, $pw, $db) {
 }
 
 /**
-* logs a user out, saves log out time and removes user from user online table
-*
-* @param int $user_id
-* @param string $mode
-*/
+ * logs a user out, saves log out time and removes user from user online table
+ *
+ * @param int $user_id
+ * @param string $mode
+ */
 function log_out($user_id, $mode = '') {
 	global $connid, $settings, $db_settings;
 	if (isset($_SESSION[$settings['session_prefix'].'usersettings']['newtime']))
@@ -40,8 +40,8 @@ function log_out($user_id, $mode = '') {
 }
 
 /**
-* counts failed logins in order to prevent brute-force attacs
-*/
+ * counts failed logins in order to prevent brute-force attacs
+ */
 function count_failed_logins() {
 	global $db_settings, $connid;
 	$result = @mysqli_query($connid, "SELECT logins FROM ".$db_settings['login_control_table']." WHERE ip='".mysqli_real_escape_string($connid, $_SERVER["REMOTE_ADDR"])."'");
@@ -54,10 +54,10 @@ function count_failed_logins() {
 }
 
 /**
+ * fetches settings from database
  *
+ * @return array $settings
  */
-* fetches settings from database
-*/
 function get_settings() {
 	global $connid, $db_settings;
 	$qGetSettings = "SELECT name, value FROM " . $db_settings['settings_table'] . "
