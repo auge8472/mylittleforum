@@ -327,14 +327,6 @@ function save_read_status($connid, $user_id, $entry_id) {
  * @param string $string
  * @return string
  */
-function make_link($string)
- {
-  $string = ' ' . $string;
-  $string = preg_replace_callback("#(^|[\n ])([\w]+?://.*?[^ \"\n\r\t<]*)#is", "shorten_link", $string);
-  $string = preg_replace("#(^|[\n ])((www|ftp)\.[\w\-]+\.[\w\-.\~]+(?:/[^ \"\t\n\r<]*)?)#is", "$1<a href=\"http://$2\">$2</a>", $string);
-  $string = my_substr($string, 1, my_strlen($string, CHARSET), CHARSET);
-  return $string;
- }
 function get_thread_items($child_array, $id, $current) {
 	global $thread_items;
 	$thread_items[] = $id;  
@@ -397,6 +389,13 @@ function pagination($page_count, $page, $browse_range = 3, $show_last = 1) {
  * @param string $string
  * @return string
  */
+function make_link($string) {
+	$string = ' ' . $string;
+	$string = preg_replace_callback("#(^|[\n ])([\w]+?://.*?[^ \"\n\r\t<]*)#is", "shorten_link", $string);
+	$string = preg_replace("#(^|[\n ])((www|ftp)\.[\w\-]+\.[\w\-.\~]+(?:/[^ \"\t\n\r<]*)?)#is", "$1<a href=\"http://$2\">$2</a>", $string);
+	$string = my_substr($string, 1, my_strlen($string, CHARSET), CHARSET);
+	return $string;
+}
 function bbcode_stripcontents($string)
  {
   return preg_replace ("/[^\n]/", '', $string);
