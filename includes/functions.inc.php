@@ -389,10 +389,6 @@ function make_link($string) {
 	$string = my_substr($string, 1, my_strlen($string, CHARSET), CHARSET);
 	return $string;
 }
-function bbcode_stripcontents($string)
- {
-  return preg_replace ("/[^\n]/", '', $string);
- }
 
 /**
  * makes inlinecode replacements
@@ -421,6 +417,9 @@ function parse_monospace($string)
   $string = str_replace("  ", " &nbsp;", $string);
   return $string;
  }
+function bbcode_stripcontents($string) {
+	return preg_replace ("/[^\n]/", '', $string);
+}
 
 /**
  * checks if a url is valid
