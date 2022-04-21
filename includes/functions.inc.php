@@ -592,23 +592,6 @@ function do_bbcode_url_email($action, $attributes, $content, $params, $node_obje
 }
 
 // processes BBCode msg code for e-mail notifications (plain text)
-function do_bbcode_msg_email($action, $attributes, $content, $params, $node_object)
- {
-  global $settings;
-  if($action == 'validate')
-   {
-    if(!isset($attributes['default']))
-     {
-      if(intval($content)>0) return true;
-     }
-    if(intval($attributes['default'])>0) return true;
-   }
-  else
-   {
-    if(!isset ($attributes['default'])) return $settings['forum_address'].'index.php?id='.$content;
-    return $content.' --> '.$settings['forum_address'].'index.php?id='.$attributes['default'];
-   }
- }
 
 /**
  * processes BBCode img for e-mail notifications (plain text)
@@ -660,6 +643,18 @@ function do_bbcode_color_email($action, $attributes, $content, $params, $node_ob
   if($action == 'validate') return true;
   return $content;
  }
+function do_bbcode_msg_email($action, $attributes, $content, $params, $node_object) {
+	global $settings;
+	if ($action == 'validate') {
+		if (!isset($attributes['default'])) {
+			if (intval($content)>0) return true;
+		}
+		if (intval($attributes['default']) > 0) return true;
+	} else {
+		if (!isset ($attributes['default'])) return $settings['forum_address'].'index.php?id='.$content;
+		return $content.' --> '.$settings['forum_address'].'index.php?id='.$attributes['default'];
+	}
+}
 
 /**
  * processes BBCode sizes for e-mail notifications (plain text)
