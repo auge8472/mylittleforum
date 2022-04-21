@@ -554,22 +554,6 @@ function do_bbcode_tex($action, $attributes, $content, $params, $node_object) {
 /**
  * processes BBCode size
  */
-function do_bbcode_size($action, $attributes, $content, $params, $node_object)
- {
-  // font size definitions:
-  // $size['tiny'] = 'x-small';
-  $size['small'] = 'smaller';
-  $size['large'] = 'large';
-  // $size['huge'] = 'x-large';
-  // end font size definitions
-
-  if($action == 'validate')
-   {
-    if(isset($size[$attributes['default']])) return true;
-    else return false;
-   }
-  return '<span style="font-size:'.$size[$attributes['default']].';">'.$content.'</span>';
- }
 function do_bbcode_color($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') {
 		$valid_colors = array('#fff', '#ccc', '#999', '#666', '#333', '#000', '#fcc', '#f66', '#f00', '#c00', '#900', '#600', '#300', '#fc9', '#f96', '#f90', '#f60', '#c60', '#930', '#630', '#ff9', '#ff6', '#fc6', '#fc3', '#c93', '#963', '#633', '#ffc', '#ff3', '#ff0', '#fc0', '#990', '#660', '#330', '#9f9', '#6f9', '#3f3', '#3c0', '#090', '#060', '#030', '#9ff', '#3ff', '#6cc', '#0cc', '#399', '#366', '#033', '#cff', '#6ff', '#3cf', '#36f', '#33f', '#009', '#006', '#ccf', '#99f', '#66c', '#63f', '#60c', '#339', '#309', '#fcf', '#f9f', '#c6c', '#c3c', '#939', '#636', '#303', 'aqua', '#00ffff', 'gray', 'grey', '#808080', 'navy', '#000080', 'silver', '#c0c0c0', 'black', '#000000', 'green', '#008000', 'olive', '#808000', 'teal', '#008080', 'blue', '#0000ff', 'lime', '#00ff00', 'purple', '#800080', 'white', '#ffffff', 'fuchsia', '#ff00ff', 'maroon', '#800000', 'red', '#ff0000', 'yellow', '#ffff00');
@@ -582,6 +566,20 @@ function do_bbcode_color($action, $attributes, $content, $params, $node_object) 
 	return '<span style="color:'.htmlspecialchars($attributes['default']).';">'.$content.'</span>';
 }
 
+/
+function do_bbcode_size($action, $attributes, $content, $params, $node_object) {
+	// font size definitions:
+	// $size['tiny'] = 'x-small';
+	$size['small'] = 'smaller';
+	$size['large'] = 'large';
+	// $size['huge'] = 'x-large';
+	// end font size definitions
+
+	if ($action == 'validate') {
+		if (isset($size[$attributes['default']])) return true;
+		else return false;
+	}
+	return '<span style="font-size:'.$size[$attributes['default']].';">'.$content.'</span>';
 // processes BBCode links for e-mail notifications (plain text)
 function do_bbcode_url_email($action, $attributes, $content, $params, $node_object)
  {
