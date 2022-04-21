@@ -469,24 +469,6 @@ function contains_invalid_string($string) {
  */
 
 /**
- * processes BBCode message links
- */
-function do_bbcode_msg($action, $attributes, $content, $params, $node_object)
- {
-  if ($action == 'validate')
-   {
-    if(!isset($attributes['default']))
-     {
-      if(intval($content)>0) return true;
-     }
-    if(intval($attributes['default'])>0) return true;
-   }
-  else
-   {
-    if(!isset ($attributes['default'])) return '<a href="index.php?id='.intval($content).'" class="internal">'.intval($content).'</a>';
-    return '<a href="index.php?id='.intval($attributes['default']).'" class="internal">'.$content.'</a>';
-   }
- }
 
 /**
  * processes BBCode img
@@ -509,6 +491,19 @@ function do_bbcode_url ($action, $attributes, $content, $params, $node_object) {
 		if (!isset($attributes['default'])) return '<a href="'.htmlspecialchars($content).'">'.htmlspecialchars(shorten_url($content)).'</a>';
 		// the code has been eneterd like this: [url=http://.../]Text[/url]
 		return '<a href="'.htmlspecialchars ($attributes['default']).'">'.$content.'</a>';
+	}
+}
+ * processes BBCode message links
+ */
+function do_bbcode_msg($action, $attributes, $content, $params, $node_object) {
+	if ($action == 'validate') {
+		if (!isset($attributes['default'])) {
+			if (intval($content) > 0) return true;
+		}
+		if (intval($attributes['default']) > 0) return true;
+	} else {
+		if (!isset($attributes['default'])) return '<a href="index.php?id='.intval($content).'" class="internal">'.intval($content).'</a>';
+		return '<a href="index.php?id='.intval($attributes['default']).'" class="internal">'.$content.'</a>';
 	}
 }
 function do_bbcode_img($action, $attributes, $content, $params, $node_object) {
