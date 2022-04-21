@@ -40,22 +40,18 @@ function log_out($user_id, $mode = '') {
 }
 
 /**
- * counts failed logins in order to prevent brute-force attacs
- */
-function count_failed_logins()
- {
-  global $db_settings, $connid;
-  $result = @mysqli_query($connid, "SELECT logins FROM ".$db_settings['login_control_table']." WHERE ip='".mysqli_real_escape_string($connid, $_SERVER["REMOTE_ADDR"])."'");
-  if(mysqli_num_rows($result)==1)
-   {
-    @mysqli_query($connid, "UPDATE ".$db_settings['login_control_table']." SET logins=logins+1 WHERE ip='".mysqli_real_escape_string($connid, $_SERVER["REMOTE_ADDR"])."'");
-   }
-  else
-   {
-    @mysqli_query($connid, "INSERT INTO ".$db_settings['login_control_table']." (time,ip,logins) VALUES (NOW(),'".mysqli_real_escape_string($connid, $_SERVER["REMOTE_ADDR"])."',1)");
-   }
-  mysqli_free_result($result);
- }
+* counts failed logins in order to prevent brute-force attacs
+*/
+function count_failed_logins() {
+	global $db_settings, $connid;
+	$result = @mysqli_query($connid, "SELECT logins FROM ".$db_settings['login_control_table']." WHERE ip='".mysqli_real_escape_string($connid, $_SERVER["REMOTE_ADDR"])."'");
+	if (mysqli_num_rows($result) == 1) {
+		@mysqli_query($connid, "UPDATE ".$db_settings['login_control_table']." SET logins=logins+1 WHERE ip='".mysqli_real_escape_string($connid, $_SERVER["REMOTE_ADDR"])."'");
+	} else {
+		@mysqli_query($connid, "INSERT INTO ".$db_settings['login_control_table']." (time,ip,logins) VALUES (NOW(),'".mysqli_real_escape_string($connid, $_SERVER["REMOTE_ADDR"])."',1)");
+	}
+	mysqli_free_result($result);
+}
 
 /**
  * fetches settings from database
