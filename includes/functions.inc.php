@@ -1238,26 +1238,25 @@ function child_ids_recursive($id, $child_array) {
 /**
  * checks if birthday is formed like DD.MM.YYYY and age is betwenn 0 and 150 years
  */
-function is_valid_birthday($birthday)
- {
-  if(strlen($birthday) != 10 || my_substr($birthday,4,1,CHARSET)!='-' || my_substr($birthday,7,1, CHARSET)!='-') $date_invalid=true;
-  if(empty($date_invalid))
-   {
-    $year = intval(my_substr($birthday, 0, 4, CHARSET));
-    $month = intval(my_substr($birthday, 5, 2, CHARSET));
-    $day = intval(my_substr($birthday, 8, 2, CHARSET));
-    if(!checkdate($month,$day,$year)) $date_invalid=true;
-   }
-  if(empty($date_invalid))
-   {
-    if($month >= 1 && $month <= 9) $monthstr = '0'.$month; else $monthstr = $month;
-    if($day >= 1 && $day <= 9) $daystr = '0'.$day; else $daystr = $day;
-    $years = intval(strrev(my_substr(strrev(intval(strftime("%Y%m%d"))-intval($year.$monthstr.$daystr)),4, NULL, CHARSET)));
-    if($years<0 || $years>150) $date_invalid=true;
-   }
-  if(empty($date_invalid)) return true;
-  else return false;
- }
+function is_valid_birthday($birthday) {
+	if (strlen($birthday) != 10 || my_substr($birthday, 4, 1, CHARSET) != '-' || my_substr($birthday, 7, 1, CHARSET) != '-') $date_invalid = true;
+	if (empty($date_invalid)) {
+		$year = intval(my_substr($birthday, 0, 4, CHARSET));
+		$month = intval(my_substr($birthday, 5, 2, CHARSET));
+		$day = intval(my_substr($birthday, 8, 2, CHARSET));
+		if (!checkdate($month, $day, $year)) $date_invalid = true;
+	}
+	if (empty($date_invalid)) {
+		$monthstr = ($month >= 1 && $month <= 9) ? '0'.$month : $month;
+		$daystr = ($day >= 1 && $day <= 9) ? '0'.$day : $day;
+		$years = intval(strrev(my_substr(strrev(intval(strftime("%Y%m%d"))-intval($year.$monthstr.$daystr)), 4, NULL, CHARSET)));
+		if ($years < 0 || $years > 150) $date_invalid = true;
+	}
+	if (empty($date_invalid))
+		return true;
+	else
+		return false;
+}
 
 /**
  * sends an e-mail notification to the parent posting author if a reply was
