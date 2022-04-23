@@ -1522,18 +1522,14 @@ function tag_cloud($days, $scale_min, $scale_max) {
  * @param int $timestamp : UNIX timestamp
  * @return string
  */
-function format_time($format, $timestamp=0)
- {
-  if($timestamp==0) $timestamp=TIMESTAMP;
-  if(defined('LOCALE_CHARSET'))
-   {
-    return iconv(LOCALE_CHARSET,CHARSET,strftime($format,$timestamp));
-   }
-  else
-   {
-    return strftime($format,$timestamp);
-   }
- }
+function format_time($format, $timestamp = 0) {
+	if ($timestamp == 0) $timestamp = TIMESTAMP;
+	if (defined('LOCALE_CHARSET')) {
+		return iconv(LOCALE_CHARSET, CHARSET, strftime($format, $timestamp));
+	} else {
+		return strftime($format,$timestamp);
+	}
+}
 
 /**
  * checks permission to edit a posting
