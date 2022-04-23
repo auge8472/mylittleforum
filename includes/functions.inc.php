@@ -1119,22 +1119,22 @@ function user_online($user_online_period = 10) {
  * @param int $word_maxlength (No check if <= 0)
  * @param string $delimiters (single character list e.g. ".?!;,", ctrl chars like \n will ignored because of preg_quote-function)
  */
-function too_long_word($text,$word_maxlength,$delimiters = ' ') {
+function too_long_word($text, $word_maxlength, $delimiters = ' ') {
 	if ($word_maxlength <= 0)
 		return false;
 	$delimiters .= " \n";
 	$text = preg_replace("/\015\012|\015|\012/", " ", $text);
 	$text = preg_replace("/[".preg_quote($delimiters, '/')."]/", " ", $text);
-	$words = preg_split('/\s+/',$text);
+	$words = preg_split('/\s+/', $text);
 
-	foreach($words as $word) {
+	foreach ($words as $word) {
 		$length = my_strlen(trim($word), CHARSET);
-		if($length > $word_maxlength) {
+		if ($length > $word_maxlength) {
 			$too_long_word = htmlspecialchars(my_substr($word,0,$word_maxlength, CHARSET))."...";
 			break;
 		}
 	}
-	if(isset($too_long_word)) 
+	if (isset($too_long_word)) 
 		return $too_long_word;
 	else
 		return false;
