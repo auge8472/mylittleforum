@@ -1337,15 +1337,6 @@ function emailNotification2ParentAuthor($id, $delayed = false) {
  * @param int $id : the id of the posting
  * @param bool $delayed : true adds a delayed message (when postibg was activated manually)
  */
-
-/**
- * returns an array with recent tags
- *
- * @param int $days : period in days
- * @param int $scale_min : frequency mimimum scale
- * @param int $scale_max : frequency maximun scale
- * @return array
- */
 function emailNotification2ModsAndAdmins($id, $delayed = false) {
 	global $settings, $db_settings, $lang, $connid;
 	$id = intval($id);
@@ -1459,13 +1450,22 @@ function resize_image($uploaded_file, $file, $new_width, $new_height, $compressi
 	else
 		return false;
 }
+
+/**
+ * returns an array with recent tags
+ *
+ * @param int $days : period in days
+ * @param int $scale_min : frequency mimimum scale
+ * @param int $scale_max : frequency maximun scale
+ * @return array
+ */
 function tag_cloud($days, $scale_min, $scale_max) {
 	global $category, $categories, $category_ids_query, $db_settings, $connid;
 	$sql = "SELECT `tag` FROM `" . $db_settings['entry_tags_table'] . "` JOIN `" . $db_settings['forum_table'] . "` ON `" . $db_settings['forum_table'] . "`.`id` = `" . $db_settings['entry_tags_table'] . "`.`bid` JOIN `" . $db_settings['tags_table'] . "` ON `" . $db_settings['tags_table'] . "`.`id` = `" . $db_settings['entry_tags_table'] . "`.`tid` WHERE `time` > (NOW() - INTERVAL " . intval($days) . " DAY) ";
 	if ($categories == false)
 		$result = @mysqli_query($connid, $sql);
 	elseif ($category > 0)
-		$result = @mysqli_query($connid, $sql . " AND `category` = " . intval($category) );
+		$result = @mysqli_query($connid, $sql . " AND `category` = " . intval($category));
 	else
 		$result = @mysqli_query($connid, $sql . " AND `category` IN (" . $category_ids_query . ")");
 
@@ -1493,20 +1493,13 @@ function tag_cloud($days, $scale_min, $scale_max) {
 		}
 		reset($tags_array);
 		
-		if ($max - $min < 1)
-			$d = 1;
-		else
-			$d = $max - $min;
-		
+		$d = ($max - $min < 1) ? 1 : $max - $min;
 		$m = ($scale_max - $scale_min) / $d;
 		$t = $scale_min - $m * $min;
 		
 		$i = 0;
 		foreach ($tags_array as $key => $val) {
-			if (my_strpos($key, ' ', 0, CHARSET))
-				$tag_escaped = '"' . $key . '"';
-			else
-				$tag_escaped = $key;
+			$tag_escaped = (my_strpos($key, ' ', 0, CHARSET)) ? '"' . $key . '"' : $key;
 			$tags[$i]['tag']       = $key;
 			$tags[$i]['escaped']   = urlencode($tag_escaped);
 			$tags[$i]['frequency'] = round($m * $val + $t, 0);
