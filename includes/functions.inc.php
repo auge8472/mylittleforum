@@ -620,11 +620,6 @@ function do_bbcode_msg_email($action, $attributes, $content, $params, $node_obje
 /**
  * processes BBCode sizes for e-mail notifications (plain text)
  */
-function do_bbcode_size_email($action, $attributes, $content, $params, $node_object)
- {
-  if($action == 'validate') return true;
-  return $content;
- }
 function do_bbcode_img_email($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') {
 		if (!is_valid_url($content)) {
@@ -872,6 +867,10 @@ function filter_control_characters($string)
  * @param string $string
  * @return string
 function do_bbcode_color_email($action, $attributes, $content, $params, $node_object) {
+	if ($action == 'validate') return true;
+	return $content;
+}
+function do_bbcode_size_email($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') return true;
 	return $content;
 }
