@@ -1339,44 +1339,6 @@ function emailNotification2ParentAuthor($id, $delayed = false) {
  */
 
 /**
- * function for the up/down buttons in the admin area in case JavaScript
- * isn't available
- *
- * @param string $table : name of database table
- * @param int $id : id of the item
- * @param string $direction : 'up' or 'down'
- */
-function move_item($table, $id, $direction)
- {
-  global $connid;
-  if($direction=='up')
-   {
-    $result = mysqli_query($connid, "SELECT order_id FROM ".$table." WHERE id = ".intval($id)." LIMIT 1") or die(mysqli_error($connid));
-    $data = mysqli_fetch_array($result);
-    mysqli_free_result($result);
-    if($data['order_id'] > 1)
-     {
-      mysqli_query($connid, "UPDATE ".$table." SET order_id=0 WHERE order_id=".$data['order_id']."-1");
-      mysqli_query($connid, "UPDATE ".$table." SET order_id=order_id-1 WHERE order_id=".$data['order_id']);
-      mysqli_query($connid, "UPDATE ".$table." SET order_id=".$data['order_id']." WHERE order_id=0");
-     }
-   }
-  else // down
-   {
-    list($item_count) = mysqli_fetch_row(mysqli_query($connid, "SELECT COUNT(*) FROM ".$table));
-    $result = mysqli_query($connid, "SELECT order_id FROM ".$table." WHERE id = ".intval($id)." LIMIT 1") or die(mysqli_error($connid));
-    $data = mysqli_fetch_array($result);
-    mysqli_free_result($result);
-    if ($data['order_id'] < $item_count)
-     {
-      mysqli_query($connid, "UPDATE ".$table." SET order_id=0 WHERE order_id=".$data['order_id']."+1");
-      mysqli_query($connid, "UPDATE ".$table." SET order_id=order_id+1 WHERE order_id=".$data['order_id']);
-      mysqli_query($connid, "UPDATE ".$table." SET order_id=".$data['order_id']." WHERE order_id=0");
-     }
-   }
- }
-
-/**
  * resizes uploaded images
  *
  * @param string $uploaded_file : uploaded file
@@ -1466,6 +1428,39 @@ function emailNotification2ModsAndAdmins($id, $delayed = false) {
 		my_mail($recipient, $lang['admin_email_subject'], $ind_emailbody);
 	}
 	mysqli_free_result($recipient_result);
+}
+
+/**
+ * function for the up/down buttons in the admin area in case JavaScript
+ * isn't available
+ *
+ * @param string $table : name of database table
+ * @param int $id : id of the item
+ * @param string $direction : 'up' or 'down'
+ */
+function move_item($table, $id, $direction) {
+	global $connid;
+	if ($direction == 'up') {
+		$result = mysqli_query($connid, "SELECT order_id FROM ".$table." WHERE id = ".intval($id)." LIMIT 1") or die(mysqli_error($connid));
+		$data = mysqli_fetch_array($result);
+		mysqli_free_result($result);
+		if ($data['order_id'] > 1) {
+			mysqli_query($connid, "UPDATE ".$table." SET order_id=0 WHERE order_id=".$data['order_id']."-1");
+			mysqli_query($connid, "UPDATE ".$table." SET order_id=order_id-1 WHERE order_id=".$data['order_id']);
+			mysqli_query($connid, "UPDATE ".$table." SET order_id=".$data['order_id']." WHERE order_id=0");
+		}
+	} else {
+		// down
+		list($item_count) = mysqli_fetch_row(mysqli_query($connid, "SELECT COUNT(*) FROM ".$table));
+		$result = mysqli_query($connid, "SELECT order_id FROM ".$table." WHERE id = ".intval($id)." LIMIT 1") or die(mysqli_error($connid));
+		$data = mysqli_fetch_array($result);
+		mysqli_free_result($result);
+		if ($data['order_id'] < $item_count) {
+			mysqli_query($connid, "UPDATE ".$table." SET order_id=0 WHERE order_id=".$data['order_id']."+1");
+			mysqli_query($connid, "UPDATE ".$table." SET order_id=order_id+1 WHERE order_id=".$data['order_id']);
+			mysqli_query($connid, "UPDATE ".$table." SET order_id=".$data['order_id']." WHERE order_id=0");
+		}
+	}
 }
 function tag_cloud($days, $scale_min, $scale_max) {
 	global $category, $categories, $category_ids_query, $db_settings, $connid;
