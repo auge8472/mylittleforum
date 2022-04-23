@@ -604,11 +604,6 @@ function do_bbcode_url_email($action, $attributes, $content, $params, $node_obje
 /**
  * processes BBCode colors for e-mail notifications (plain text)
  */
-function do_bbcode_color_email($action, $attributes, $content, $params, $node_object)
- {
-  if($action == 'validate') return true;
-  return $content;
- }
 function do_bbcode_msg_email($action, $attributes, $content, $params, $node_object) {
 	global $settings;
 	if ($action == 'validate') {
@@ -876,6 +871,10 @@ function filter_control_characters($string)
  *
  * @param string $string
  * @return string
+function do_bbcode_color_email($action, $attributes, $content, $params, $node_object) {
+	if ($action == 'validate') return true;
+	return $content;
+}
  */
 function html_format($string){
 	global $settings;
