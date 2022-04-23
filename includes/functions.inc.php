@@ -961,28 +961,28 @@ function signature_format($string) {
 	$string = filter_control_characters($string);
 	$bbcode = new StringParser_BBCode();
 	$bbcode->addFilter (STRINGPARSER_FILTER_PRE, 'convertlinebreaks');
-	$bbcode->addParser (array ('block', 'inline', 'link', 'listitem', 'code', 'quote', 'rtl', 'ltr'), 'htmlspecialchars');
-	$bbcode->addParser (array ('block', 'inline', 'link', 'listitem', 'quote', 'rtl', 'ltr'), 'nl2br');
+	$bbcode->addParser(array('block', 'inline', 'link', 'listitem', 'code', 'quote', 'rtl', 'ltr'), 'htmlspecialchars');
+	$bbcode->addParser(array('block', 'inline', 'link', 'listitem', 'quote', 'rtl', 'ltr'), 'nl2br');
 	
-	if($settings['smilies'] == 1) {
-		$bbcode->addParser (array ('block', 'inline', 'listitem', 'quote', 'rtl', 'ltr'), 'smilies');
+	if ($settings['smilies'] == 1) {
+		$bbcode->addParser(array('block', 'inline', 'listitem', 'quote', 'rtl', 'ltr'), 'smilies');
 	}
-	if($settings['autolink'] == 1) {
-		$bbcode->addParser (array ('block', 'inline', 'listitem', 'quote', 'rtl', 'ltr'), 'make_link');
+	if ($settings['autolink'] == 1) {
+		$bbcode->addParser(array('block', 'inline', 'listitem', 'quote', 'rtl', 'ltr'), 'make_link');
 	}
 	
-	if($settings['bbcode'] == 1) {
+	if ($settings['bbcode'] == 1) {
 		$bbcode->setGlobalCaseSensitive(false);
-		$bbcode->addCode ('b', 'simple_replace', null, array ('start_tag' => '<strong>', 'end_tag' => '</strong>'), 'inline', array ('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array ());
-		$bbcode->addCode ('i', 'simple_replace', null, array ('start_tag' => '<em>', 'end_tag' => '</em>'), 'inline', array ('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array ());
-		$bbcode->addCode ('u', 'simple_replace', null, array ('start_tag' => '<span class="underline">', 'end_tag' => '</span>'), 'inline', array ('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array ());
-		$bbcode->addCode ('url', 'usecontent?', 'do_bbcode_url', array ('usecontent_param' => 'default'), 'link', array ('listitem', 'block', 'inline', 'quote', 'rtl', 'ltr'), array ('link'));
-		$bbcode->addCode ('link', 'usecontent?', 'do_bbcode_url', array ('usecontent_param' => 'default'), 'link', array ('listitem', 'block', 'inline', 'quote', 'rtl', 'ltr'), array ('link'));
-		$bbcode->addCode ('color', 'callback_replace', 'do_bbcode_color', array ('usecontent_param' => 'default'), 'inline', array ('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array ());
+		$bbcode->addCode('b', 'simple_replace', null, array('start_tag' => '<strong>', 'end_tag' => '</strong>'), 'inline', array('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array());
+		$bbcode->addCode('i', 'simple_replace', null, array('start_tag' => '<em>', 'end_tag' => '</em>'), 'inline', array('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array());
+		$bbcode->addCode('u', 'simple_replace', null, array('start_tag' => '<span class="underline">', 'end_tag' => '</span>'), 'inline', array('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array());
+		$bbcode->addCode('url', 'usecontent?', 'do_bbcode_url', array('usecontent_param' => 'default'), 'link', array('listitem', 'block', 'inline', 'quote', 'rtl', 'ltr'), array('link'));
+		$bbcode->addCode('link', 'usecontent?', 'do_bbcode_url', array('usecontent_param' => 'default'), 'link', array('listitem', 'block', 'inline', 'quote', 'rtl', 'ltr'), array('link'));
+		$bbcode->addCode('color', 'callback_replace', 'do_bbcode_color', array('usecontent_param' => 'default'), 'inline', array('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array());
 		// $bbcode->setOccurrenceType ('img', 'image');
 		// $bbcode->setMaxOccurrences ('image', 2);
-		if($settings['bbcode_img'] == 1) {
-			$bbcode->addCode ('img', 'usecontent', 'do_bbcode_img', array (), 'image', array ('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array ());
+		if ($settings['bbcode_img'] == 1) {
+			$bbcode->addCode('img', 'usecontent', 'do_bbcode_img', array(), 'image', array('listitem', 'block', 'inline', 'link', 'quote', 'rtl', 'ltr'), array());
 		}
 	}
 	// $bbcode->setRootParagraphHandling(true);
