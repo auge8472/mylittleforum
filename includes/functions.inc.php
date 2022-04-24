@@ -316,17 +316,6 @@ function save_read_status($connid, $user_id, $entry_id) {
  * @param int $id
  * @param int $current
  */
-
-/**
- *
- */
-
-/**
- * replaces urls with links
- *
- * @param string $string
- * @return string
- */
 function get_thread_items($child_array, $id, $current) {
 	global $thread_items;
 	$thread_items[] = $id;  
@@ -377,7 +366,7 @@ function pagination($page_count, $page, $browse_range = 3, $show_last = 1) {
 }
 
 /**
- * strips everything except new line symbol
+ * replaces urls with links
  *
  * @param string $string
  * @return string
@@ -391,8 +380,8 @@ function make_link($string) {
 }
 
 /**
- * makes inlinecode replacements
  * unifies line breaks
+ *
  * @param string $string
  * @return string
  */
@@ -401,10 +390,33 @@ function convertlinebreaks($string) {
 }
 
 /**
- * makes inlinecode replacements
+ * strips everything except new line symbol
+ *
+ * @param string $string
+ * @return string
  */
 function bbcode_stripcontents($string) {
 	return preg_replace ("/[^\n]/", '', $string);
+}
+
+/**
+ * makes inlinecode replacements
+ */
+function parse_inlinecode($string) {
+	$string = nl2br(htmlspecialchars($string));
+	$string = str_replace("  ", "&nbsp; ", $string);
+	$string = str_replace("  ", " &nbsp;", $string);
+	return $string;
+}
+
+/**
+ * makes inlinecode replacements
+ */
+function parse_monospace($string) {
+	$string = nl2br(htmlspecialchars($string));
+	$string = str_replace("  ", "&nbsp; ", $string);
+	$string = str_replace("  ", " &nbsp;", $string);
+	return $string;
 }
 
 /**
@@ -413,25 +425,6 @@ function bbcode_stripcontents($string) {
  * @param string $url
  * @return bool
  */
-
-/**
- * checks if a email address is valid
- *
- * @param string $email
- * @return bool
- */
-function parse_inlinecode($string) {
-	$string = nl2br(htmlspecialchars($string));
-	$string = str_replace("  ", "&nbsp; ", $string);
-	$string = str_replace("  ", " &nbsp;", $string);
-	return $string;
-}
-function parse_monospace($string) {
-	$string = nl2br(htmlspecialchars($string));
-	$string = str_replace("  ", "&nbsp; ", $string);
-	$string = str_replace("  ", " &nbsp;", $string);
-	return $string;
-}
 function is_valid_url($url) {
 	if (!preg_match("/^.+\..+$/", $url)) {
 		return false;
@@ -441,6 +434,13 @@ function is_valid_url($url) {
 	}
 	return true;
 }
+
+/**
+ * checks if a email address is valid
+ *
+ * @param string $email
+ * @return bool
+ */
 function is_valid_email($email) {
 	if (!preg_match("/^([\w\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,}|[0-9]{1,3})(\]?)$/", $email)) {
 		return false;
@@ -467,12 +467,6 @@ function contains_invalid_string($string) {
 /**
  * processes BBCode links
  */
-
-/**
-
-/**
- * processes BBCode img
- */
 function do_bbcode_url ($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') {
 		// 1) the code is validated
@@ -493,6 +487,8 @@ function do_bbcode_url ($action, $attributes, $content, $params, $node_object) {
 		return '<a href="'.htmlspecialchars ($attributes['default']).'">'.$content.'</a>';
 	}
 }
+
+/**
  * processes BBCode message links
  */
 function do_bbcode_msg($action, $attributes, $content, $params, $node_object) {
@@ -506,6 +502,10 @@ function do_bbcode_msg($action, $attributes, $content, $params, $node_object) {
 		return '<a href="index.php?id='.intval($attributes['default']).'" class="internal">'.$content.'</a>';
 	}
 }
+
+/**
+ * processes BBCode img
+ */
 function do_bbcode_img($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') {
 		if (!is_valid_url($content)) {
@@ -550,10 +550,6 @@ function do_bbcode_tex($action, $attributes, $content, $params, $node_object) {
 /**
  * processes BBCode color
  */
-
-/**
- * processes BBCode size
- */
 function do_bbcode_color($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') {
 		$valid_colors = array('#fff', '#ccc', '#999', '#666', '#333', '#000', '#fcc', '#f66', '#f00', '#c00', '#900', '#600', '#300', '#fc9', '#f96', '#f90', '#f60', '#c60', '#930', '#630', '#ff9', '#ff6', '#fc6', '#fc3', '#c93', '#963', '#633', '#ffc', '#ff3', '#ff0', '#fc0', '#990', '#660', '#330', '#9f9', '#6f9', '#3f3', '#3c0', '#090', '#060', '#030', '#9ff', '#3ff', '#6cc', '#0cc', '#399', '#366', '#033', '#cff', '#6ff', '#3cf', '#36f', '#33f', '#009', '#006', '#ccf', '#99f', '#66c', '#63f', '#60c', '#339', '#309', '#fcf', '#f9f', '#c6c', '#c3c', '#939', '#636', '#303', 'aqua', '#00ffff', 'gray', 'grey', '#808080', 'navy', '#000080', 'silver', '#c0c0c0', 'black', '#000000', 'green', '#008000', 'olive', '#808000', 'teal', '#008080', 'blue', '#0000ff', 'lime', '#00ff00', 'purple', '#800080', 'white', '#ffffff', 'fuchsia', '#ff00ff', 'maroon', '#800000', 'red', '#ff0000', 'yellow', '#ffff00');
@@ -566,7 +562,9 @@ function do_bbcode_color($action, $attributes, $content, $params, $node_object) 
 	return '<span style="color:'.htmlspecialchars($attributes['default']).';">'.$content.'</span>';
 }
 
-/
+/**
+ * processes BBCode size
+ */
 function do_bbcode_size($action, $attributes, $content, $params, $node_object) {
 	// font size definitions:
 	// $size['tiny'] = 'x-small';
@@ -581,6 +579,7 @@ function do_bbcode_size($action, $attributes, $content, $params, $node_object) {
 	}
 	return '<span style="font-size:'.$size[$attributes['default']].';">'.$content.'</span>';
 }
+
 // processes BBCode links for e-mail notifications (plain text)
 function do_bbcode_url_email($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') {
@@ -593,18 +592,6 @@ function do_bbcode_url_email($action, $attributes, $content, $params, $node_obje
 }
 
 // processes BBCode msg code for e-mail notifications (plain text)
-
-/**
- * processes BBCode img for e-mail notifications (plain text)
- */
-
-/**
- * processes BBCode tex for e-mail notifications (plain text)
- */
-
-/**
- * processes BBCode colors for e-mail notifications (plain text)
- */
 function do_bbcode_msg_email($action, $attributes, $content, $params, $node_object) {
 	global $settings;
 	if ($action == 'validate') {
@@ -619,7 +606,7 @@ function do_bbcode_msg_email($action, $attributes, $content, $params, $node_obje
 }
 
 /**
- * processes BBCode sizes for e-mail notifications (plain text)
+ * processes BBCode img for e-mail notifications (plain text)
  */
 function do_bbcode_img_email($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') {
@@ -638,6 +625,8 @@ function do_bbcode_img_email($action, $attributes, $content, $params, $node_obje
 }
 
 /**
+ * processes BBCode tex for e-mail notifications (plain text)
+ */
 function do_bbcode_tex_email($action, $attributes, $content, $params, $node_object) {
 	global $settings;
 	if ($action == 'validate') {
@@ -646,36 +635,25 @@ function do_bbcode_tex_email($action, $attributes, $content, $params, $node_obje
 		return $content;
 	}
 }
- * processes bbcode code
+
+/**
+ * processes BBCode colors for e-mail notifications (plain text)
  */
-
-/**
- * removes [code] and [/code] in email texts
- */
-
-/**
-
-/**
- * filters control characters
- *
- * @param string $string
- * @return string
- */
-
-/**
- * formats posting texts into HTML using the stringparser bbcode class
- * http://www.christian-seiler.de/projekte/php/bbcode/
- *
- * @param string $string
- * @return string
 function do_bbcode_color_email($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') return true;
 	return $content;
 }
+
+/**
+ * processes BBCode sizes for e-mail notifications (plain text)
+ */
 function do_bbcode_size_email($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') return true;
 	return $content;
 }
+
+/**
+ * processes bbcode code
  */
 function do_bbcode_code($action, $attributes, $content, $params, $node_object) {
 	global $settings;
@@ -703,6 +681,10 @@ function do_bbcode_code($action, $attributes, $content, $params, $node_object) {
 		}
 	}
 }
+
+/**
+ * removes [code] and [/code] in email texts
+ */
 function do_bbcode_code_email($action, $attributes, $content, $params, $node_object) {
 	if ($action == 'validate') {
 		return true;
@@ -714,6 +696,8 @@ function do_bbcode_code_email($action, $attributes, $content, $params, $node_obj
 		return $content;
 	}
 }
+
+/**
  * replaces
  *   "> hi,
  *    > how are you?
@@ -787,6 +771,13 @@ function quote($string) {
 	$string = implode("\n",$string_array);
 	return $string;
 }
+
+/**
+ * filters control characters
+ *
+ * @param string $string
+ * @return string
+ */
 function filter_control_characters($string) {
 	$char = array(array(), array());
 	$char['char'][0] = chr(0);
@@ -856,6 +847,14 @@ function filter_control_characters($string) {
 	$string = str_replace($char['char'], $char['repl'], $string);
 	return $string;
 }
+
+/**
+ * formats posting texts into HTML using the stringparser bbcode class
+ * http://www.christian-seiler.de/projekte/php/bbcode/
+ *
+ * @param string $string
+ * @return string
+ */
 function html_format($string) {
 	global $settings;
 	require_once('modules/stringparser_bbcode/stringparser_bbcode.class.php');
@@ -1054,8 +1053,6 @@ function quote_reply($string) {
  * @param string $string
  * @return string
  */
-
-/**
 function shorten_link($string) {
 	global $settings;
 	if (is_array($string)) {
@@ -1079,6 +1076,8 @@ function shorten_url($url) {
 	else $url_short = $url;
 	return $url_short;
 }
+
+/**
  * replaces text smilies by images
  *
  * @param string $string
@@ -1536,16 +1535,6 @@ function format_time($format, $timestamp = 0) {
  *
  * @return int : 0 = not authorized, 1 = edit period expired, 2 = locked, 3 = posting has replies, 4 = no replies
  */
-
-/**
- *
- *
- */
- * checks file names
- *
- * @param string $filename
- * @return bool
- */
 function get_edit_authorization($id, $posting_user_id, $edit_key, $time, $locked) {
 	global $settings, $db_settings, $connid;
 	$authorization['edit'] = false;
@@ -1594,19 +1583,8 @@ function get_edit_authorization($id, $posting_user_id, $edit_key, $time, $locked
 }
 
 /**
- * generates a random string
- *
- * @param int $length
- * @param string $characters
- * @return string
- */
-
-/**
- * generates password hash
  * creates a backup file
  *
- * @param string $pw
- * @return string
  * @param int $mode : 0 = complete, 1 = entries, 2 = userdata
  * @return bool
  */
@@ -1848,13 +1826,8 @@ function create_backup_file($mode = 0) {
 }
 
 /**
-
-/**
- * add "http://" to url if given without protocol
  * restores a backup file
  *
- * @param string $url
- * @return string
  * @param string $backup_file
  */
 function restore_backup($backup_file) {
@@ -1888,9 +1861,23 @@ function restore_backup($backup_file) {
 }
 
 /**
+ * checks file names
+ *
+ * @param string $filename
+ * @return bool
+ */
 function check_filename($filename) {
 	if (preg_match('/^[a-zA-Z0-9._\-]+$/', $filename)) return true;
 	else return false;
+}
+
+/**
+ * generates a random string
+ *
+ * @param int $length
+ * @param string $characters
+ * @return string
+ */
 function random_string($length = 8, $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
 	$random_string = '';
 	$characters_length = strlen($characters);
@@ -1899,11 +1886,21 @@ function random_string($length = 8, $characters = 'abcdefghijklmnopqrstuvwxyzABC
 	}
 	return $random_string;
 }
+
+/**
+ * generates password hash
+ *
+ * @param string $pw
+ * @return string
+ */
 function generate_pw_hash($pw) {
 	$salt = random_string(10, '0123456789abcdef');
 	$salted_hash = sha1($pw.$salt);
 	$hash_with_salt = $salted_hash.$salt;
 	return $hash_with_salt;
+}
+
+/**
  * checks password comparing it with the hash
  *
  * @param string $pw
@@ -1924,12 +1921,21 @@ function is_pw_correct($pw,$hash) {
 	}
 	else return false;
 }
+
+/**
+ * add "http://" to url if given without protocol
+ *
+ * @param string $url
+ * @return string
+ */
 function add_http_if_no_protocol($url) {
 	if(my_substr($url, 0, 7, CHARSET) != 'http://' && my_substr($url, 0, 8, CHARSET) != 'https://' && my_substr($url, 0, 6, CHARSET) != 'ftp://' && my_substr($url, 0, 9, CHARSET) != 'gopher://' && my_substr($url, 0, 7, CHARSET) != 'news://') {
 		$url = 'http://'.$url;
 	}
 	return $url;
 }
+
+/**
  * determine string length using mb_strlen if available or strlen if not
  *
  * @param string $string
@@ -1994,18 +2000,11 @@ function my_strpos($haystack, $needle, $offset=0, $encoding='utf-8') {
 }
 
 /**
-
-/**
- * removes line breaks to avoid e-mail header injections
+ * encodes sender or recipient name
  *
- * @param string $string
+ * @param string $name
  * @return string
  */
-* encodes sender or recipient name
-*
-* @param string $name
-* @return string
-*/
 function encode_mail_name($name, $charset=CHARSET, $linefeed="\r\n") {
 	$name = str_replace('"', '\\"', $name);
 	if (preg_match("/(\.|\;|\")/", $name)) {
@@ -2016,9 +2015,16 @@ function encode_mail_name($name, $charset=CHARSET, $linefeed="\r\n") {
 }
 
 /**
+ * removes line breaks to avoid e-mail header injections
+ *
+ * @param string $string
+ * @return string
+ */
 function mail_header_filter($string) {
 	return preg_replace("/(\015\012|\015|\012)/", '', $string);
 }
+
+/**
  * encodes a given string by the MIME header encoding scheme using
  * mb_encode_mimeheader if available or base64_encode if not
  *
@@ -2044,7 +2050,6 @@ function my_mb_encode_mimeheader($string, $charset, $transfer_encoding, $linefee
  *
  * @return string
  */
-}
 function my_quoted_printable_encode($input, $line_max=76, $space_conv = false ) {
 	$hex = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
 	$lines = preg_split('/(?:\r\n|\r|\n)/', $input);
@@ -2277,7 +2282,7 @@ function get_not_accepted_words($string) {
  *
  * @param string $url
  * @return mix $content
- */ 
+ */
 function getExternalResource($url) {
 	$content = false;
 	// curl
@@ -2424,7 +2429,7 @@ function checkUpdate($currentVersion = '0.0') {
  * checks for invalid characters, used for username checks
  *
  * @param string $string
- * @reurn bool
+ * @return bool
  */
 function contains_special_characters($string) {
 	if(preg_match("/([[:cntrl:]]|\p{Cf})/u", $string)) 
@@ -2437,12 +2442,6 @@ function contains_special_characters($string) {
 /**
  * gets available timezones
  *
-
-/**
-* gets available languages
-*
-* @return array
-*/
  * @return array
  */
 function get_timezones() {
@@ -2456,6 +2455,12 @@ function get_timezones() {
 	if (isset($timezones)) return $timezones;
 	else return false;
 }
+
+/**
+ * gets available languages
+ *
+ * @return array
+ */
 function get_languages($titles = false) {
 	$handle = opendir('./'.LANG_DIR.'/');
 	while ($file = readdir($handle)) {
@@ -2484,10 +2489,10 @@ function get_languages($titles = false) {
 }
 
 /**
-* gets available themes
-*
-* @return array
-*/
+ * gets available themes
+ *
+ * @return array
+ */
 function get_themes($titles = false) {
 	$handle=opendir('./'.THEMES_DIR.'/');
 	while ($dir = readdir($handle)) {
@@ -2517,7 +2522,7 @@ function get_themes($titles = false) {
  *
  * @param int user_id
  * @return array [path, filename, path/filename] or false if not exists
- */ 
+ */
 function getAvatar($user_id) {
 	$avatar_images_path = 'images/avatars/';
 	$fileList = glob( $avatar_images_path . intval($user_id) . "[_.]*{png,jpg,jpeg,gif,bmp}" , GLOB_BRACE);
