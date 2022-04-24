@@ -2125,15 +2125,13 @@ function my_mail($to, $subject, $message, $from='') {
 		$PHP_MAILER->clearAllRecipients();
 		
 		//send the message, check for errors
-		if  (!$isSend) {
+		if (!$isSend) {
 			// remove comment for debugging and config e.g. 'SMTPDebug' => {1,2,3,4}
 			//echo $PHP_MAILER->ErrorInfo;
-		} 
-		else {
+		} else {
 			return true;
 		}
-	}
-	else {
+	} else {
 		$mail_header_separator = "\n"; // "\r\n" complies with RFC 2822 but might cause problems in some cases (see http://php.net/manual/en/function.mail.php)
 	
 		$mail_charset = defined(CHARSET) ? strtoupper(CHARSET) : 'UTF-8';
@@ -2155,8 +2153,7 @@ function my_mail($to, $subject, $message, $from='') {
 			if (@mail($to, $subject, $message, $headers, $settings['mail_parameter'])) {
 				return true;
 			}
-		}
-		else {
+		} else {
 			if (@mail($to, $subject, $message, $headers)) {
 				return true;
 			}
