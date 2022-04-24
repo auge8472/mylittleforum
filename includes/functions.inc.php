@@ -1994,10 +1994,6 @@ function my_strpos($haystack, $needle, $offset=0, $encoding='utf-8') {
  * @param string $string
  * @return string
  */
- function mail_header_filter($string)
-   {
-    return preg_replace("/(\015\012|\015|\012)/", '', $string);
-   }
 * encodes sender or recipient name
 *
 * @param string $name
@@ -2013,6 +2009,9 @@ function encode_mail_name($name, $charset=CHARSET, $linefeed="\r\n") {
 }
 
 /**
+function mail_header_filter($string) {
+	return preg_replace("/(\015\012|\015|\012)/", '', $string);
+}
  * encodes a given string by the MIME header encoding scheme using
  * mb_encode_mimeheader if available or base64_encode if not
  *
