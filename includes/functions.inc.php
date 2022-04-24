@@ -1546,10 +1546,6 @@ function format_time($format, $timestamp = 0) {
  * @param string $filename
  * @return bool
  */
-function check_filename($filename)
- {
-  if(preg_match('/^[a-zA-Z0-9._\-]+$/', $filename)) return true;
-  else return false;
 function get_edit_authorization($id, $posting_user_id, $edit_key, $time, $locked) {
 	global $settings, $db_settings, $connid;
 	$authorization['edit'] = false;
@@ -1892,6 +1888,9 @@ function restore_backup($backup_file) {
 }
 
 /**
+function check_filename($filename) {
+	if (preg_match('/^[a-zA-Z0-9._\-]+$/', $filename)) return true;
+	else return false;
 function random_string($length = 8, $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
 	$random_string = '';
 	$characters_length = strlen($characters);
