@@ -1955,17 +1955,13 @@ function my_strtolower($string, $encoding='utf-8') {
  * @param string $encoding
  * @return string
  */
-function my_substr($string, $start, $length, $encoding='utf-8')
- {
-  if(function_exists('mb_substr'))
-   {
-    return mb_substr($string, $start, $length, $encoding);
-   }
-  else
-   {
-    return substr($string, $start, $length);
-   }
- }
+function my_substr($string, $start, $length, $encoding='utf-8') {
+	if (function_exists('mb_substr')) {
+		return mb_substr($string, $start, $length, $encoding);
+	} else {
+		return substr($string, $start, $length);
+	}
+}
 
 /**
  * find position of first occurrence of string in a string using mb_strpos
