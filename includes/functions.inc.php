@@ -2462,28 +2462,25 @@ function contains_special_characters($string) {
 /**
  * gets available timezones
  *
- * @reurn array
- */
-function get_timezones()
- {
-  if(!$timezones_raw = @file('config/time_zones')) return false;
-  foreach($timezones_raw as $line)
-   {
-    $line = trim($line);
-    if(!empty($line))
-     {
-      $timezones[] = $line;
-     }
-   }
-  if(isset($timezones)) return $timezones;
-  else return false;
- }
 
 /**
 * gets available languages
 *
 * @return array
 */
+ * @return array
+ */
+function get_timezones() {
+	if (!$timezones_raw = @file('config/time_zones')) return false;
+	foreach ($timezones_raw as $line) {
+		$line = trim($line);
+		if (!empty($line)) {
+			$timezones[] = $line;
+		}
+	}
+	if (isset($timezones)) return $timezones;
+	else return false;
+}
 function get_languages($titles = false) {
 	$handle = opendir('./'.LANG_DIR.'/');
 	while ($file = readdir($handle)) {
