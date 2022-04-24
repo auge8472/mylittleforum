@@ -1892,6 +1892,14 @@ function restore_backup($backup_file) {
 }
 
 /**
+function random_string($length = 8, $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
+	$random_string = '';
+	$characters_length = strlen($characters);
+	for ($i = 0; $i < $length; $i++) {
+		$random_string .= $characters[mt_rand(0, $characters_length - 1)];
+	}
+	return $random_string;
+}
 function generate_pw_hash($pw) {
 	$salt = random_string(10, '0123456789abcdef');
 	$salted_hash = sha1($pw.$salt);
@@ -2037,14 +2045,6 @@ function my_mb_encode_mimeheader($string, $charset, $transfer_encoding, $linefee
  *
  * @return string
  */
-function random_string($length = 8, $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
-	$random_string = '';
-	$characters_length = strlen($characters);
-	for ($i = 0; $i < $length; $i++) {
-		$random_string .= $characters[mt_rand(0, $characters_length - 1)];
-	}
-	return $random_string;
-}
 }
 function my_quoted_printable_encode($input, $line_max=76, $space_conv = false ) {
 	$hex = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
