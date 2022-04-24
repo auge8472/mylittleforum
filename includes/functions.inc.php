@@ -2260,37 +2260,30 @@ function is_user_agent_banned($user_agent, $banned_user_agents)
  * searches for banned words
  *
  * @param string $string
- * @reurn mixed
+ * @return mixed
  */
-function get_not_accepted_words($string)
- {
-  global $db_settings, $connid;
-  // check for not accepted words:
-  $result=mysqli_query($connid, "SELECT list FROM ".$db_settings['banlists_table']." WHERE name = 'words' LIMIT 1");
-  if(!$result) raise_error('database_error',mysqli_error($connid));
-  $data = mysqli_fetch_array($result);
-  mysqli_free_result($result);
-  if(trim($data['list']) != '')
-   {
-    $not_accepted_words = explode("\n",$data['list']);
-    foreach($not_accepted_words as $not_accepted_word)
-     {
-      if($not_accepted_word!='' && my_strpos($string, my_strtolower($not_accepted_word, CHARSET), 0, CHARSET)!==false)
-       {
-        $found_not_accepted_words[] = $not_accepted_word;
-       }
-     }
-   }
-  if(isset($found_not_accepted_words))
-   {
-    return $found_not_accepted_words;
-   }
-  else
-   {
-    return false;
-   }
- }
- 
+function get_not_accepted_words($string) {
+	global $db_settings, $connid;
+	// check for not accepted words:
+	$result = mysqli_query($connid, "SELECT list FROM ".$db_settings['banlists_table']." WHERE name = 'words' LIMIT 1");
+	if (!$result) raise_error('database_error', mysqli_error($connid));
+	$data = mysqli_fetch_array($result);
+	mysqli_free_result($result);
+	if (trim($data['list']) != '') {
+		$not_accepted_words = explode("\n",$data['list']);
+		foreach ($not_accepted_words as $not_accepted_word) {
+			if ($not_accepted_word != '' && my_strpos($string, my_strtolower($not_accepted_word, CHARSET), 0, CHARSET) !== false) {
+				$found_not_accepted_words[] = $not_accepted_word;
+			}
+		}
+	}
+	if (isset($found_not_accepted_words)) {
+		return $found_not_accepted_words;
+	} else {
+		return false;
+	}
+}
+
 /**
  * Returns the content of an external page
  * Using curl, file_get_contents and fsockopen
