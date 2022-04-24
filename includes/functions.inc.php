@@ -2021,19 +2021,15 @@ function encode_mail_name($name, $charset=CHARSET, $linefeed="\r\n") {
  * @param string $transfer_encoding
  * @return string
  */
-function my_mb_encode_mimeheader($string, $charset, $transfer_encoding, $linefeed="\r\n")
- {
-  if(function_exists('mb_internal_encoding') && function_exists('mb_encode_mimeheader'))
-   {
-    mb_internal_encoding($charset);
-    $string = mb_encode_mimeheader($string, $charset, $transfer_encoding, $linefeed);
-    return $string;
-   }
-  else
-   {
-    return '=?'.$charset.'?B?'.base64_encode($string).'?=';
-   }
- }
+function my_mb_encode_mimeheader($string, $charset, $transfer_encoding, $linefeed="\r\n") {
+	if (function_exists('mb_internal_encoding') && function_exists('mb_encode_mimeheader')) {
+		mb_internal_encoding($charset);
+		$string = mb_encode_mimeheader($string, $charset, $transfer_encoding, $linefeed);
+		return $string;
+	} else {
+		return '=?'.$charset.'?B?'.base64_encode($string).'?=';
+	}
+}
 
 /**
  * Encode string to quoted-printable.
