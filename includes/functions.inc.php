@@ -2695,19 +2695,19 @@ function setReceiptTimestamp($offset = 0) {
  *
  * @param string $status_code
  */
-function raise_error($error,$error_message='') {
+function raise_error($error, $error_message = '') {
 	global $settings, $lang;
-	if(empty($lang['language'])) 
+	if (empty($lang['language'])) 
 		$lang['language'] ='en';
-	if(empty($lang['charset'])) 
+	if (empty($lang['charset'])) 
 		$lang['charset'] ='utf-8';
-	if(empty($lang['db_error'])) 
+	if (empty($lang['db_error'])) 
 		$lang['db_error'] = 'Database error';
-	if(empty($settings['forum_name'])) 
+	if (empty($settings['forum_name'])) 
 		$settings['forum_name'] = 'my little forum';
 	$title = 'Error';
 	$message = '';
-	switch($error){
+	switch ($error) {
 		case '403':
 			header($_SERVER['SERVER_PROTOCOL'] . " 403 Forbidden");
 			header("Status: 403 Forbidden");
@@ -2742,31 +2742,29 @@ function raise_error($error,$error_message='') {
 			header("Status: 503 Service Unavailable");
 		break;
 	}
-	?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $lang['language']; ?>">
-	<head>
-	<title><?php echo $settings['forum_name'].' - '.$title; ?></title>
-	<meta http-equiv="content-type" content="text/html; charset=<?php echo $lang['charset']; ?>" />
-	<style type="text/css">
-	<!--
-	body               { color:#000; background:#fff; margin:0; padding:0; font-family: verdana, arial, sans-serif; font-size:100.1%; }
-	h1                 { font-size:1.25em; }
-	p,ul               { font-size:0.82em; line-height:1.45em; }
-	//top              { margin:0; padding:0 20px 0 20px; height:4.4em; color:#000000; background:#d2ddea; border-bottom: 1px solid #bacbdf; line-height:4.4em;}
-	//top h1           { font-size:1.7em; margin:0; padding:0; color:#000080; }
-	//content          { padding:20px; }
-	-->
-	</style>
-	</head>
-	<body>
-	<div id="top"><h1><?php echo $settings['forum_name']; ?></h1></div>
-	<div id="content">
-	<h1><?php echo $title; ?></h1>
-	<p><?php echo $message; ?></p>
-	</div>
-	</body>
-	</html><?php
+?><!DOCTYPE html>
+<html lang="<?php echo htmlspecialchars($lang['language']); ?>">
+ <head>
+  <title><?php echo htmlspecialchars($settings['forum_name']).' - '.htmlspecialchars($title); ?></title>
+  <meta charset="<?php echo $lang['charset']; ?>" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style type="text/css">
+body       { color:#000; background:#fff; margin:0; padding:0; font-family: verdana, arial, sans-serif; font-size:1em; }
+h1         { font-size:1.25em; }
+p          { line-height:1.45em; }
+#top       { margin:0; padding:0 20px; background:#d2ddea; border-bottom: 1px solid #bacbdf; }
+#content   { padding:20px; }
+  </style>
+ </head>
+ <body>
+  <header id="top"><h1><?php echo htmlspecialchars($settings['forum_name']); ?></h1></header>
+  <main id="content">
+   <h2><?php echo htmlspecialchars($title); ?></h2>
+   <p><?php echo htmlspecialchars($message); ?></p>
+  </main>
+ </body>
+</html><?php
 	exit;
- }
+}
 
 ?>
