@@ -168,6 +168,9 @@ function daily_actions($current_time = 0) {
 	}
 }
 
+/**
+ * searches for inactive users, deletes their data or sends information about the inactivity status
+ */
 function handleInactiveUsers() {
 	global $settings, $db_settings, $lang, $connid;
 
@@ -206,6 +209,12 @@ function handleInactiveUsers() {
 	mysqli_free_result($result);
 }
 
+/**
+ * deletes the corrsponding data for a given user-id
+ *
+ * @param integer $user_id
+ * @param string $display_name (replacement string for the original user name)
+ */
 function deleteUser($user_id = 0, $display_name = 'Unnamed') {
 	global $settings, $db_settings, $connid;
 	
