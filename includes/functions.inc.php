@@ -2242,19 +2242,17 @@ function is_ip_banned($ip, $banned_ips)
  * checks if the user agent is banned
  *
  * @param array $banned_user_agents
- * @reurn bool
+ * @return bool
  */
-function is_user_agent_banned($user_agent, $banned_user_agents)
- {
-  foreach($banned_user_agents as $banned_user_agent)
-   {
-    if(strpos($user_agent,$banned_user_agent)!==false) // case sensitive, faster
-     {
-      return true;
-     }
-   }
-  return false;
- }
+function is_user_agent_banned($user_agent, $banned_user_agents) {
+	foreach ($banned_user_agents as $banned_user_agent) {
+		if (strpos($user_agent, $banned_user_agent) !== false) {
+			// case sensitive, faster
+			return true;
+		}
+	}
+	return false;
+}
 
 /**
  * searches for banned words
