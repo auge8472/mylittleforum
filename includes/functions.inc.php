@@ -2052,38 +2052,40 @@ function random_string($length = 8, $characters = 'abcdefghijklmnopqrstuvwxyzABC
 }
 }
 function my_quoted_printable_encode($input, $line_max=76, $space_conv = false ) {
-	$hex = array('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
+	$hex = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
 	$lines = preg_split('/(?:\r\n|\r|\n)/', $input);
 	$eol = "\n";
 	$escape = '=';
 	$output = '';
-	//while(list(, $line) = each($lines)) {
 	foreach ($lines as $line) {
 		$linlen = strlen($line);
 		$newline = '';
-		for($i = 0; $i < $linlen; $i++) {
+		for ($i = 0; $i < $linlen; $i++) {
 			$c = substr($line, $i, 1);
-			$dec = ord( $c );
-			if(($i == 0) && ($dec == 46)) { // convert first point in the line into =2E
+			$dec = ord($c);
+			if (($i == 0) && ($dec == 46)) {
+				// convert first point in the line into =2E
 				$c = '=2E';
 			}
-			if($dec == 32) {
-				if($i==($linlen-1)) { // convert space at eol only
+			if ($dec == 32) {
+				if ($i == ($linlen - 1)) {
+					// convert space at eol only
+					$c = '=20';
+				} elseif ($space_conv) {
 					$c = '=20';
 				}
-				elseif($space_conv) {
-					$c = '=20';
-				}
-			}
-			elseif(($dec == 61) || ($dec < 32) || ($dec > 126)) { // always encode "\t", which is *not* required
+			} elseif (($dec == 61) || ($dec < 32) || ($dec > 126)) {
+				// always encode "\t", which is *not* required
 				$h2 = floor($dec/16);
 				$h1 = floor($dec%16);
 				$c = $escape.$hex[$h2].$hex[$h1];
 			}
-			if((strlen($newline) + strlen($c)) >= $line_max) { // CRLF is not counted
+			if ((strlen($newline) + strlen($c)) >= $line_max) {
+				// CRLF is not counted
 				$output .= $newline.$escape.$eol; //  soft line break; " =\r\n" is okay
 				$newline = '';
-				if($dec == 46) { // check if newline first character will be point or not
+				if ($dec == 46) {
+					// check if newline first character will be point or not
 					$c = '=2E';
 				}
 			}
