@@ -1982,23 +1982,6 @@ function my_strpos($haystack, $needle, $offset=0, $encoding='utf-8') {
 }
 
 /**
- * encodes sender or recipient name
- *
- * @param string $name
- * @return string
- */
-function encode_mail_name($name, $charset=CHARSET, $linefeed="\r\n")
- {
-  $name = str_replace('"', '\\"', $name);
-  if(preg_match("/(\.|\;|\")/", $name))
-   {
-    return '"'.my_mb_encode_mimeheader($name, $charset, "Q", $linefeed).'"';
-   }
-  else
-   {
-    return my_mb_encode_mimeheader($name, $charset, "Q", $linefeed);
-   }
- }
 
 /**
  * removes line breaks to avoid e-mail header injections
@@ -2010,6 +1993,19 @@ function encode_mail_name($name, $charset=CHARSET, $linefeed="\r\n")
    {
     return preg_replace("/(\015\012|\015|\012)/", '', $string);
    }
+* encodes sender or recipient name
+*
+* @param string $name
+* @return string
+*/
+function encode_mail_name($name, $charset=CHARSET, $linefeed="\r\n") {
+	$name = str_replace('"', '\\"', $name);
+	if (preg_match("/(\.|\;|\")/", $name)) {
+		return '"'.my_mb_encode_mimeheader($name, $charset, "Q", $linefeed).'"';
+	} else {
+		return my_mb_encode_mimeheader($name, $charset, "Q", $linefeed);
+	}
+}
 
 /**
  * encodes a given string by the MIME header encoding scheme using
