@@ -2518,41 +2518,33 @@ function get_languages($titles=false)
  }
 
 /**
- * gets available themes
- *
- * @reurn array
- */
-function get_themes($titles=false)
- {
-  $handle=opendir('./'.THEMES_DIR.'/');
-  while($dir = readdir($handle))
-   {
-    if($dir != '.' && $dir != '..' && is_dir('./'.THEMES_DIR.'/'.$dir) && file_exists('./'.THEMES_DIR.'/'.$dir.'/main.tpl'))
-     {
-      $themes[] = $dir;
-     }
-   }
-  if(isset($themes))
-   {
-    if(!$titles)
-     {
-      return $themes;
-     }
-    else
-     {
-      natcasesort($themes);
-      $i=0;
-      foreach($themes as $t)
-       {
-        $t_themes[$i]['identifier'] = $t;
-        $t_themes[$i]['title'] = str_replace('_',' ', $t);
-        ++$i;
-       }
-      return $t_themes;
-     }
-   }
-  else return false;
- }
+* gets available themes
+*
+* @return array
+*/
+function get_themes($titles = false) {
+	$handle=opendir('./'.THEMES_DIR.'/');
+	while ($dir = readdir($handle)) {
+		if ($dir != '.' && $dir != '..' && is_dir('./'.THEMES_DIR.'/'.$dir) && file_exists('./'.THEMES_DIR.'/'.$dir.'/main.tpl')) {
+			$themes[] = $dir;
+		}
+	}
+	if (isset($themes)) {
+		if (!$titles) {
+			return $themes;
+		} else {
+			natcasesort($themes);
+			$i = 0;
+			foreach ($themes as $t) {
+				$t_themes[$i]['identifier'] = $t;
+				$t_themes[$i]['title'] = str_replace('_', ' ', $t);
+				++$i;
+			}
+			return $t_themes;
+		}
+	}
+	else return false;
+}
  
 /**
  * Returns the avatar image by user id
