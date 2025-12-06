@@ -1,4 +1,4 @@
- <template id="ajax-preview-template">
+ <template id="tmpl-ajax-preview">
   <div id="ajax-preview" popover>
    <header>
     <button id="ajax-preview-close">
