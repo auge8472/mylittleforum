@@ -635,11 +635,10 @@ blockquote code {
 	color: #808080;
 	font-size: 0.86em;
 }
-#content .signature p {
-	margin: 10px 0 0 0;
+.signature p {
+	margin: 0;
 	padding: 0;
 	color: #808080;
-	font-weight: normal;
 	font-size: 0.86em;
 }
 
