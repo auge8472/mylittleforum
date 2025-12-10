@@ -108,10 +108,11 @@ blockquote code{font-family:"courier new",courier;color:#6f6f6f}
 .thread-posting{position:relative;border:1px solid;border-inline-start:10px solid;border-color:#d2ddea;margin-block:0 .875em;padding:0;background:#fff}
 .thread-posting > *{padding-inline:.625em;padding-block:.25em}
 .thread-posting h1,.thread-posting h2{margin:0 0 2px;padding:0;font-size:1.05em}
-.thread-posting .header{background:#f5f5f5;margin:0}
+.thread-posting header{background:#f5f5f5;margin:0}
 .thread-posting img.avatar{position:relative;margin:0 .75em .75em .75em;padding:.25em;background:#f5f5f5;float:right;float:inline-end}
 .thread-posting .author{margin:1px 0 0;font-style:italic}
-.thread-posting .body,.thread-posting .signature,#content .thread-posting p.tags,.thread-posting .posting-footer{margin:0}
+.thread-posting .wrapper > *:not(:is(:first-child, [popover])){margin-block:.75em 0}
+.thread-posting footer{margin:0}
 .hide-posting{position:absolute;top:0;left:-10px}
 .thread-wrapper{margin:0;padding:0}
 .reply-wrapper{margin-block:0;margin-inline:20px 0;padding:0;list-style-type:none}
@@ -122,7 +123,7 @@ blockquote code{font-family:"courier new",courier;color:#6f6f6f}
 .op-link a{color:gray}
 #content .body,#content .body > *:not([popover]){display:flow-root}
 #content .body img{max-width:100%;height:auto}
-#content p.tags{margin:20px 0 0;padding:0;color:gray;font-size:.86em}
+.posting p.tags{margin:20px 0 0;padding:0;color:gray;font-size:.86em}
 #content .signature p{margin:10px 0 0;padding:0;color:gray;font-weight:400;font-size:.86em}
 h2.postingform{margin:0 0 20px}
 p.reply-to{margin:0 0 20px}
