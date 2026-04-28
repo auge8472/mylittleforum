@@ -344,6 +344,39 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 			}
 			
+			// changes in the temporary information table
+			$statusTestTempInfoTable = true;
+			if (empty($update['errors'])) {
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['temp_infos_table'] ."_tmp` 
+					LIKE `". $db_settings['temp_infos_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyTable) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestTempInfoTable = false;
+				} else {
+					$update['status'] = 'Temporary information table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT `". $db_settings['temp_infos_table'] ."_tmp`
+					SELECT * FROM `". $db_settings['temp_infos_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestTempInfoTable = false;
+				} else {
+					$update['status'] = 'Data of temporary information table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['temp_infos_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestTempInfoTable = false;
+				} else {
+					$update['status'] = 'Structure of tags table altered.';
+				}
+			}
+			
 			
 			/**
 			 * From here on everything can be done as a transaction in one step
