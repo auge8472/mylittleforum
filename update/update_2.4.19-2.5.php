@@ -301,6 +301,49 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			if (!@mysqli_query($connid, "DROP TABLE IF EXISTS `" . $db_settings['uploads_table'] . "`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 			
 			
+			// changes in the login control table
+			$statusTestLoginControlTable = true;
+			if (empty($update['errors'])) {
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['login_control_table'] ."_tmp` 
+					LIKE `". $db_settings['login_control_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyTable) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestLoginControlTable = false;
+				} else {
+					$update['status'] = 'Login control table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT `". $db_settings['login_control_table'] ."_tmp`
+					SELECT * FROM `". $db_settings['login_control_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestLoginControlTable = false;
+				} else {
+					$update['status'] = 'Data of login control table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['login_control_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestLoginControlTable = false;
+				} else {
+					$update['status'] = 'Structure of login control table altered.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['login_control_table'] ."_tmp`
+					CHANGE `ip` `ip` VARCHAR(128) NOT NULL default ''";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestLoginControlTable = false;
+				} else {
+					$update['status'] = 'Structure of columns in login control table altered.';
+				}
+			}
+			
 			// changes in the pages table
 			$statusTestPagesTable = true;
 			if (empty($update['errors'])) {
