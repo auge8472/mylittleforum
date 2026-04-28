@@ -301,6 +301,49 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			if (!@mysqli_query($connid, "DROP TABLE IF EXISTS `" . $db_settings['uploads_table'] . "`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 			
 			
+			// changes in the pages table
+			$statusTestPagesTable = true;
+			if (empty($update['errors'])) {
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['pages_table'] ."_tmp` 
+					LIKE `". $db_settings['pages_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyTable) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestPagesTable = false;
+				} else {
+					$update['status'] = 'Pages table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT `". $db_settings['pages_table'] ."_tmp`
+					SELECT * FROM `". $db_settings['pages_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestPagesTable = false;
+				} else {
+					$update['status'] = 'Data of pages table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['pages_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestPagesTable = false;
+				} else {
+					$update['status'] = 'Structure of pages table altered.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['pages_table'] ."_tmp`
+					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestPagesTable = false;
+				} else {
+					$update['status'] = 'Structure of columns in pages table altered.';
+				}
+			}
+			
 			// changes in the read entries table
 			$statusTestReadStatusTable = true;
 			if (empty($update['errors'])) {
