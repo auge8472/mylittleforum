@@ -301,6 +301,49 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			if (!@mysqli_query($connid, "DROP TABLE IF EXISTS `" . $db_settings['uploads_table'] . "`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 			
 			
+			// changes in the categories table
+			$statusTestCategoriesTable = true;
+			if (empty($update['errors'])) {
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['category_table'] ."_tmp` 
+					LIKE `". $db_settings['category_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyTable) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestCategoriesTable = false;
+				} else {
+					$update['status'] = 'Categories table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT `". $db_settings['category_table'] ."_tmp`
+					SELECT * FROM `". $db_settings['category_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestCategoriesTable = false;
+				} else {
+					$update['status'] = 'Data of categories table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['category_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestCategoriesTable = false;
+				} else {
+					$update['status'] = 'Structure of categories table altered.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['category_table'] ."_tmp`
+					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestCategoriesTable = false;
+				} else {
+					$update['status'] = 'Structure of columns in categories table altered.';
+				}
+			}
+			
 			// changes in the entry cache table
 			$statusTestEntriesCacheTable = true;
 			if (empty($update['errors'])) {
