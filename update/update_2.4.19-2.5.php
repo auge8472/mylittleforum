@@ -301,6 +301,51 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			if (!@mysqli_query($connid, "DROP TABLE IF EXISTS `" . $db_settings['uploads_table'] . "`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 			
 			
+			// changes in the bookmarks table
+			$statusTestBookmarksTable = true;
+			if (empty($update['errors'])) {
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['bookmarks_table'] ."_tmp` 
+					LIKE `". $db_settings['bookmarks_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyTable) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestBookmarksTable = false;
+				} else {
+					$update['status'] = 'Bookmarks table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT `". $db_settings['bookmarks_table'] ."_tmp`
+					SELECT * FROM `". $db_settings['bookmarks_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestBookmarksTable = false;
+				} else {
+					$update['status'] = 'Data of bookmarks table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['bookmarks_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestBookmarksTable = false;
+				} else {
+					$update['status'] = 'Structure of bookmarks table altered.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['bookmarks_table'] ."_tmp`
+					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+					CHANGE `user_id` `user_id` int UNSIGNED NOT NULL,
+					CHANGE `posting_id` `posting_id` int UNSIGNED NOT NULL";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestBookmarksTable = false;
+				} else {
+					$update['status'] = 'Structure of columns in bookmarks table altered.';
+				}
+			}
+			
 			// changes in the bookmark tags table
 			$statusTestBookmarkTagsTable = true;
 			if (empty($update['errors'])) {
