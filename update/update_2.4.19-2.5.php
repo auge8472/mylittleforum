@@ -301,6 +301,55 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			if (!@mysqli_query($connid, "DROP TABLE IF EXISTS `" . $db_settings['uploads_table'] . "`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 			
 			
+			// changes in the banlist table
+			$statusTestBanlistsTable = true;
+			if (empty($update['errors'])) {
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['banlists_table'] ."_tmp` (
+					`name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+					`list` text COLLATE=utf8mb4_general_ci NULL DEFAULT NULL,
+					PRIMARY KEY (`name`)
+				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+				if (!mysqli_query($connid, $qCopyTable) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestBanlistsTable = false;
+				} else {
+					$update['status'] = 'Banlists table created.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT INTO `". $db_settings['banlists_table'] ."_tmp`
+					SELECT `name`, GROUP_CONCAT(`list` SEPARATOR '\n') AS `list`
+					FROM `". $db_settings['banlists_table'] ."` WHERE `name` = 'ips';";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestBanlistsTable = false;
+				} else {
+					$update['status'] = 'IP data of banlists table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT INTO `". $db_settings['banlists_table'] ."_tmp`
+					SELECT `name`, GROUP_CONCAT(`list` SEPARATOR '\n') AS `list`
+					FROM `". $db_settings['banlists_table'] ."` WHERE `name` = 'user_agents';";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestBanlistsTable = false;
+				} else {
+					$update['status'] = 'User agents data of banlists table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT INTO `". $db_settings['banlists_table'] ."_tmp`
+					SELECT `name`, GROUP_CONCAT(`list` SEPARATOR '\n') AS `list`
+					FROM `". $db_settings['banlists_table'] ."` WHERE `name` = 'words';";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestBanlistsTable = false;
+				} else {
+					$update['status'] = 'Bad words data of banlists table copied.';
+				}
+			}
+			
 			// changes in the bookmarks table
 			$statusTestBookmarksTable = true;
 			if (empty($update['errors'])) {
