@@ -322,6 +322,8 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 				if (!mysqli_query($connid, $qCreateTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+				} else {
+					$update['status'][] = 'Posting rating table for the Akismet filter created.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -335,6 +337,8 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 				if (!mysqli_query($connid, $qCreateTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+				} else {
+					$update['status'][] = 'Posting rating table for the Bayesian filter created.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -346,6 +350,8 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_bin;";
 				if (!mysqli_query($connid, $qCreateTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+				} else {
+					$update['status'][] = 'Wordlist table for the Bayesian filter created.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -361,6 +367,8 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_bin;";
 				if (!mysqli_query($connid, $qCreateTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+				} else {
+					$update['status'][] = 'Uploads table created.';
 				}
 			}
 			
