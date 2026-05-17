@@ -842,6 +842,39 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 			}
 			
+			// changes in the user data cache table
+			$statusTestUserdataCacheTable = true;
+			if (empty($update['errors'])) {
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['userdata_cache_table'] ."_tmp` 
+					LIKE `". $db_settings['userdata_cache_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyTable) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestUserdataCacheTable = false;
+				} else {
+					$update['status'] = 'Userdata cache table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT `". $db_settings['userdata_cache_table'] ."_tmp`
+					SELECT * FROM `". $db_settings['userdata_cache_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestUserdataCacheTable = false;
+				} else {
+					$update['status'] = 'Data of userdata cache table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['userdata_cache_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestUserdataCacheTable = false;
+				} else {
+					$update['status'] = 'Structure of userdata cache table altered.';
+				}
+			}
+			
 			// changes in the user online table
 			$statusTestUserOnlineTable = true;
 			if (empty($update['errors'])) {
