@@ -385,7 +385,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBanlistsTable = false;
 				} else {
-					$update['status'] = 'Banlists table created.';
+					$update['status'][] = 'Banlists table created.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -396,7 +396,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBanlistsTable = false;
 				} else {
-					$update['status'] = 'IP data of banlists table copied.';
+					$update['status'][] = 'IP data of banlists table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -407,7 +407,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBanlistsTable = false;
 				} else {
-					$update['status'] = 'User agents data of banlists table copied.';
+					$update['status'][] = 'User agents data of banlists table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -418,7 +418,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBanlistsTable = false;
 				} else {
-					$update['status'] = 'Bad words data of banlists table copied.';
+					$update['status'][] = 'Bad words data of banlists table copied.';
 				}
 			}
 			
@@ -431,7 +431,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarksTable = false;
 				} else {
-					$update['status'] = 'Bookmarks table copied.';
+					$update['status'][] = 'Bookmarks table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -441,7 +441,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarksTable = false;
 				} else {
-					$update['status'] = 'Data of bookmarks table copied.';
+					$update['status'][] = 'Data of bookmarks table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -451,7 +451,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarksTable = false;
 				} else {
-					$update['status'] = 'Structure of bookmarks table altered.';
+					$update['status'][] = 'Structure of bookmarks table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -463,7 +463,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarksTable = false;
 				} else {
-					$update['status'] = 'Structure of columns in bookmarks table altered.';
+					$update['status'][] = 'Structure of columns in bookmarks table altered.';
 				}
 			}
 			
@@ -476,7 +476,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarkTagsTable = false;
 				} else {
-					$update['status'] = 'Bookmark tags table copied.';
+					$update['status'][] = 'Bookmark tags table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -486,7 +486,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarkTagsTable = false;
 				} else {
-					$update['status'] = 'Data of bookmark tags table copied.';
+					$update['status'][] = 'Data of bookmark tags table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -496,7 +496,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarkTagsTable = false;
 				} else {
-					$update['status'] = 'Structure of bookmark tags table altered.';
+					$update['status'][] = 'Structure of bookmark tags table altered.';
 				}
 			}
 			
@@ -509,7 +509,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestCategoriesTable = false;
 				} else {
-					$update['status'] = 'Categories table copied.';
+					$update['status'][] = 'Categories table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -519,7 +519,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestCategoriesTable = false;
 				} else {
-					$update['status'] = 'Data of categories table copied.';
+					$update['status'][] = 'Data of categories table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -529,7 +529,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestCategoriesTable = false;
 				} else {
-					$update['status'] = 'Structure of categories table altered.';
+					$update['status'][] = 'Structure of categories table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -539,7 +539,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestCategoriesTable = false;
 				} else {
-					$update['status'] = 'Structure of columns in categories table altered.';
+					$update['status'][] = 'Structure of columns in categories table altered.';
 				}
 			}
 			
@@ -552,7 +552,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestEntriesCacheTable = false;
 				} else {
-					$update['status'] = 'Entries cache table copied.';
+					$update['status'][] = 'Entries cache table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -562,7 +562,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestEntriesCacheTable = false;
 				} else {
-					$update['status'] = 'Data of entries cache table copied.';
+					$update['status'][] = 'Data of entries cache table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -572,7 +572,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestEntriesCacheTable = false;
 				} else {
-					$update['status'] = 'Structure of entries cache table altered.';
+					$update['status'][] = 'Structure of entries cache table altered.';
 				}
 			}
 			
@@ -585,7 +585,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestEntryTagsTable = false;
 				} else {
-					$update['status'] = 'Entry tags table copied.';
+					$update['status'][] = 'Entry tags table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -595,7 +595,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestEntryTagsTable = false;
 				} else {
-					$update['status'] = 'Data of entry tags table copied.';
+					$update['status'][] = 'Data of entry tags table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -605,7 +605,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestEntryTagsTable = false;
 				} else {
-					$update['status'] = 'Structure of entry tags table altered.';
+					$update['status'][] = 'Structure of entry tags table altered.';
 				}
 			}
 			
@@ -618,7 +618,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestLoginControlTable = false;
 				} else {
-					$update['status'] = 'Login control table copied.';
+					$update['status'][] = 'Login control table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -628,7 +628,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestLoginControlTable = false;
 				} else {
-					$update['status'] = 'Data of login control table copied.';
+					$update['status'][] = 'Data of login control table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -638,7 +638,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestLoginControlTable = false;
 				} else {
-					$update['status'] = 'Structure of login control table altered.';
+					$update['status'][] = 'Structure of login control table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -648,7 +648,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestLoginControlTable = false;
 				} else {
-					$update['status'] = 'Structure of columns in login control table altered.';
+					$update['status'][] = 'Structure of columns in login control table altered.';
 				}
 			}
 			
@@ -661,7 +661,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestPagesTable = false;
 				} else {
-					$update['status'] = 'Pages table copied.';
+					$update['status'][] = 'Pages table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -671,7 +671,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestPagesTable = false;
 				} else {
-					$update['status'] = 'Data of pages table copied.';
+					$update['status'][] = 'Data of pages table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -681,7 +681,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestPagesTable = false;
 				} else {
-					$update['status'] = 'Structure of pages table altered.';
+					$update['status'][] = 'Structure of pages table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -691,7 +691,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestPagesTable = false;
 				} else {
-					$update['status'] = 'Structure of columns in pages table altered.';
+					$update['status'][] = 'Structure of columns in pages table altered.';
 				}
 			}
 			
@@ -704,7 +704,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestReadStatusTable = false;
 				} else {
-					$update['status'] = 'Read status table copied.';
+					$update['status'][] = 'Read status table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -714,7 +714,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestReadStatusTable = false;
 				} else {
-					$update['status'] = 'Data of read status table copied.';
+					$update['status'][] = 'Data of read status table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -724,7 +724,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestReadStatusTable = false;
 				} else {
-					$update['status'] = 'Structure of read status table altered.';
+					$update['status'][] = 'Structure of read status table altered.';
 				}
 			}
 			
@@ -737,7 +737,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSettingsTable = false;
 				} else {
-					$update['status'] = 'Settings table copied.';
+					$update['status'][] = 'Settings table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -747,7 +747,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSettingsTable = false;
 				} else {
-					$update['status'] = 'Data of settings table copied.';
+					$update['status'][] = 'Data of settings table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -757,7 +757,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSettingsTable = false;
 				} else {
-					$update['status'] = 'Structure of settings table altered.';
+					$update['status'][] = 'Structure of settings table altered.';
 				}
 			}
 			
@@ -770,7 +770,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSmiliesTable = false;
 				} else {
-					$update['status'] = 'Smilies table copied.';
+					$update['status'][] = 'Smilies table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -780,7 +780,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSmiliesTable = false;
 				} else {
-					$update['status'] = 'Data of smilies table copied.';
+					$update['status'][] = 'Data of smilies table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -790,7 +790,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSmiliesTable = false;
 				} else {
-					$update['status'] = 'Structure of smilies table altered.';
+					$update['status'][] = 'Structure of smilies table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -800,7 +800,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSmiliesTable = false;
 				} else {
-					$update['status'] = 'Structure of columns in smilies table altered.';
+					$update['status'][] = 'Structure of columns in smilies table altered.';
 				}
 			}
 			
@@ -813,7 +813,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSubscriptionsTable = false;
 				} else {
-					$update['status'] = 'Subscriptions table copied.';
+					$update['status'][] = 'Subscriptions table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -823,7 +823,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSubscriptionsTable = false;
 				} else {
-					$update['status'] = 'Data of subscriptions table copied.';
+					$update['status'][] = 'Data of subscriptions table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -833,7 +833,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSubscriptionsTable = false;
 				} else {
-					$update['status'] = 'Structure of subscriptions table altered.';
+					$update['status'][] = 'Structure of subscriptions table altered.';
 				}
 			}
 			
@@ -846,7 +846,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestTagsTable = false;
 				} else {
-					$update['status'] = 'Tags table copied.';
+					$update['status'][] = 'Tags table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -856,7 +856,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestTagsTable = false;
 				} else {
-					$update['status'] = 'Data of tags table copied.';
+					$update['status'][] = 'Data of tags table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -866,7 +866,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestTagsTable = false;
 				} else {
-					$update['status'] = 'Structure of tags table altered.';
+					$update['status'][] = 'Structure of tags table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -877,7 +877,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestTagsTable = false;
 				} else {
-					$update['status'] = 'Structure of columns in tags table altered.';
+					$update['status'][] = 'Structure of columns in tags table altered.';
 				}
 			}
 			
@@ -890,7 +890,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestTempInfoTable = false;
 				} else {
-					$update['status'] = 'Temporary information table copied.';
+					$update['status'][] = 'Temporary information table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -900,7 +900,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestTempInfoTable = false;
 				} else {
-					$update['status'] = 'Data of temporary information table copied.';
+					$update['status'][] = 'Data of temporary information table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -910,7 +910,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestTempInfoTable = false;
 				} else {
-					$update['status'] = 'Structure of temporary information table altered.';
+					$update['status'][] = 'Structure of temporary information table altered.';
 				}
 			}
 			
@@ -923,7 +923,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserdataCacheTable = false;
 				} else {
-					$update['status'] = 'Userdata cache table copied.';
+					$update['status'][] = 'Userdata cache table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -933,7 +933,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserdataCacheTable = false;
 				} else {
-					$update['status'] = 'Data of userdata cache table copied.';
+					$update['status'][] = 'Data of userdata cache table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -943,7 +943,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserdataCacheTable = false;
 				} else {
-					$update['status'] = 'Structure of userdata cache table altered.';
+					$update['status'][] = 'Structure of userdata cache table altered.';
 				}
 			}
 			
@@ -956,7 +956,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserOnlineTable = false;
 				} else {
-					$update['status'] = 'User online table copied.';
+					$update['status'][] = 'User online table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -966,7 +966,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserOnlineTable = false;
 				} else {
-					$update['status'] = 'Data of user online table copied.';
+					$update['status'][] = 'Data of user online table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -976,7 +976,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserOnlineTable = false;
 				} else {
-					$update['status'] = 'Structure of user online table altered.';
+					$update['status'][] = 'Structure of user online table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -987,7 +987,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserOnlineTable = false;
 				} else {
-					$update['status'] = 'Structure of columns in user online table altered.';
+					$update['status'][] = 'Structure of columns in user online table altered.';
 				}
 			}
 			
