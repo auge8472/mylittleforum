@@ -609,6 +609,79 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 			}
 			
+			// changes in the forum/entries table
+			$statusTestEntriesTable = true;
+			if (empty($update['errors'])) {
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['forum_table'] ."_tmp` 
+					LIKE `". $db_settings['forum_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyTable) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestEntriesTable = false;
+				} else {
+					$update['status'][] = 'Forum entries table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT `". $db_settings['forum_table'] ."_tmp`
+					SELECT * FROM `". $db_settings['forum_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestEntriesTable = false;
+				} else {
+					$update['status'][] = 'Data of forum entries table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['forum_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestEntriesTable = false;
+				} else {
+					$update['status'][] = 'Structure of forum entries table altered.';
+				}
+			}
+			if (empty($update['errors'])) {
+				// Do NOT drop columns span and spam_check_status at that time!
+				// The content of the columns is relevant for later operations.
+				$qAlterTable = "ALTER TABLE `". $db_settings['forum_table'] ."_tmp`
+					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+					CHANGE `pid` `pid` int UNSIGNED NOT NULL DEFAULT '0',
+					CHANGE `tid` `tid` int UNSIGNED NOT NULL DEFAULT '0',
+					CHANGE `edited_by` `edited_by` int UNSIGNED NULL DEFAULT NULL,
+					CHANGE `user_id` `user_id` int UNSIGNED NULL DEFAULT '0',
+					CHANGE `category` `category` int UNSIGNED NOT NULL DEFAULT '0',
+					CHANGE `views` `views` int UNSIGNED NULL DEFAULT '0',
+					CHANGE `last_reply` `last_reply` TIMESTAMP NULL DEFAULT NULL,
+					CHANGE `edited` `edited` TIMESTAMP NULL DEFAULT NULL;";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestEntriesTable = false;
+				} else {
+					$update['status'][] = 'Structure of columns in login control table altered.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qSearch4email_notification = "SHOW COLUMNS FROM `". $db_settings['forum_table'] ."`
+					LIKE 'email_notification';";
+				$qAlterTable = "ALTER TABLE `". $db_settings['forum_table'] ."_tmp`
+					DROP `email_notification`";
+				$rEN_exists = mysqli_query($connid, $qSearch4email_notification);
+				if ($rEN_exists === false) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 2) .': ' . mysqli_error($connid);
+					$statusTestEntriesTable = false;
+				} else {
+					if (mysqli_num_rows($rEN_exists) > 0) {
+						if (!mysqli_query($connid, $qAlterTable)) {
+							$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+							$statusTestEntriesTable = false;
+						} else {
+							$update['status'][] = 'Removed obsolete column email_notofications from the forum entries table.';
+						}
+					}
+				}
+			}
+			
 			// changes in the login control table
 			$statusTestLoginControlTable = true;
 			if (empty($update['errors'])) {
