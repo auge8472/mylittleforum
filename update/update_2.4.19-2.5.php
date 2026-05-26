@@ -914,6 +914,60 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 			}
 			
+			// changes in the user data table
+			$statusTestUserdataTable = true;
+			if (empty($update['errors'])) {
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['userdata_table'] ."_tmp` 
+					LIKE `". $db_settings['userdata_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyTable) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestUserdataTable = false;
+				} else {
+					$update['status'][] = 'Userdata table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCopyData = "INSERT `". $db_settings['userdata_table'] ."_tmp`
+					SELECT * FROM `". $db_settings['userdata_table'] ."`;";
+				if (!mysqli_query($connid, $qCopyData)) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestUserdataTable = false;
+				} else {
+					$update['status'][] = 'Data of userdata cache table copied.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['userdata_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestUserdataTable = false;
+				} else {
+					$update['status'][] = 'Structure of userdata cache table altered.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['userdata_table'] ."_tmp`
+					CHANGE `user_name` `user_name` VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+					CHANGE `user_email` `user_email` VARCHAR(255) NOT NULL,
+					CHANGE `birthday` `birthday` DATE NULL DEFAULT NULL,
+					CHANGE `last_logout` `last_logout` TIMESTAMP NULL DEFAULT NULL,
+					CHANGE `registered` `registered` TIMESTAMP NULL DEFAULT NULL,
+					ADD `inactivity_notification` BOOLEAN NOT NULL DEFAULT FALSE,
+					ADD `browser_window_target` tinyint(4) NOT NULL DEFAULT '0' AFTER `user_lock`,
+					DROP INDEX `user_type`,
+					DROP INDEX `user_name`,
+					ADD KEY `key_user_type` (`user_type`),
+					ADD UNIQUE KEY `key_user_name` (`user_name`),
+					ADD UNIQUE KEY `key_user_email` (`user_email`);";
+				if (!mysqli_query($connid, $qAlterTable)) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+					$statusTestUserdataTable = false;
+				} else {
+					$update['status'][] = 'Structure of userdata cache table altered.';
+				}
+			}
+			
 			// changes in the user data cache table
 			$statusTestUserdataCacheTable = true;
 			if (empty($update['errors'])) {
