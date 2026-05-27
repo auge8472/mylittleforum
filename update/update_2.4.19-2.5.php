@@ -1188,7 +1188,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					
 					mysqli_query($connid, "UPDATE `" . $db_settings['userdata_table'] . "_tmp` SET
 					`last_logout` = NULL
-					WHERE `last_logout` <= STR_TO_DATE('1900-01-01','%Y-%d-%m');");
+					WHERE `last_logout` <= STR_TO_DATE('1970-01-01','%Y-%d-%m');");
 					
 					mysqli_query($connid, "UPDATE `" . $db_settings['userdata_table'] . "_tmp` SET
 					`registered` = NULL
