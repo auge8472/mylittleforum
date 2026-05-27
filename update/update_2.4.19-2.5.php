@@ -1006,7 +1006,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserdataTable = false;
 				} else {
-					$update['status'][] = 'Data of userdata cache table copied.';
+					$update['status'][] = 'Data of userdata table copied.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -1016,7 +1016,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserdataTable = false;
 				} else {
-					$update['status'][] = 'Structure of userdata cache table altered.';
+					$update['status'][] = 'Structure of userdata table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -1037,7 +1037,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserdataTable = false;
 				} else {
-					$update['status'][] = 'Structure of userdata cache table altered.';
+					$update['status'][] = 'Structure of columns in userdata table altered.';
 				}
 			}
 			
