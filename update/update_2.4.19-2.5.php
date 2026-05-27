@@ -1127,8 +1127,16 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				mysqli_autocommit($connid, false);
 				mysqli_begin_transaction($connid);
 				try {
+					/**
+					 * add, change or remove datasets
+					 *
+					 * Attention: all datasets will be added to, changed in, or removed from the temporary tables.
+					 * The only exception from this rule are the datasets that are stored in the new tables.
+					 */
+					
+					// add new datasets to the settings table
 					$uaa = ($settings['user_area_public'] == 0) ? 2 : 1;
-					mysqli_query($connid, "INSERT INTO `" . $db_settings['settings_table'] . "` (`name`, `value`)
+					mysqli_query($connid, "INSERT INTO `" . $db_settings['settings_table'] . "_tmp` (`name`, `value`)
 					VALUES
 						('uploads_per_page', '20'),
 						('bbcode_latex', '0'),
@@ -1144,11 +1152,13 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 						('link_open_target', ''),
 						('bbcode_media', '0');");
 					
-					mysqli_query($connid, "UPDATE `" . $db_settings['settings_table'] . "` SET
+					// change datasets in the settings table
+					mysqli_query($connid, "UPDATE `" . $db_settings['settings_table'] . "_tmp` SET
 						`name`='spam_check_registered'
 					WHERE `name`='akismet_check_registered';");
 					
-					mysqli_query($connid, "DELETE FROM `" . $db_settings['settings_table'] . "`
+					// delete outdated datasets from the settings table
+					mysqli_query($connid, "DELETE FROM `" . $db_settings['settings_table'] . "_tmp`
 					WHERE name IN(
 						'bbcode_flash',
 						'bbcode_tex',
@@ -1158,7 +1168,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 						'bad_behavior');");
 					
 					
-					// changes in the new introduced tables
+					// add new datasets to the new introduced tables
 					mysqli_query($connid, "INSERT INTO `" . $db_settings['b8_wordlist_table'] . "` (`token`, `count_ham`, `count_spam`)
 					VALUES
 						('b8*dbversion', '3', NULL),
@@ -1171,23 +1181,25 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					SELECT `id`, `spam`, 0 FROM `" . $db_settings['forum_table'] ."`;");
 					
 					
-					mysqli_query($connid, "UPDATE `" . $db_settings['userdata_table'] . "` SET
+					// change datasets in the user data table
+					mysqli_query($connid, "UPDATE `" . $db_settings['userdata_table'] . "_tmp` SET
 					`birthday` = NULL
 					WHERE `birthday` <= STR_TO_DATE('1900-01-01','%Y-%d-%m');");
 					
-					mysqli_query($connid, "UPDATE `" . $db_settings['userdata_table'] . "` SET
+					mysqli_query($connid, "UPDATE `" . $db_settings['userdata_table'] . "_tmp` SET
 					`last_logout` = NULL
 					WHERE `last_logout` <= STR_TO_DATE('1900-01-01','%Y-%d-%m');");
 					
-					mysqli_query($connid, "UPDATE `" . $db_settings['userdata_table'] . "` SET
+					mysqli_query($connid, "UPDATE `" . $db_settings['userdata_table'] . "_tmp` SET
 					`registered` = NULL
 					
 					
-					mysqli_query($connid, "UPDATE `" . $db_settings['forum_table'] . "` SET
+					// change datasets in the user entries table
+					mysqli_query($connid, "UPDATE `" . $db_settings['forum_table'] . "_tmp` SET
 					`last_reply` = NULL
 					WHERE `last_reply` <= STR_TO_DATE('1900-01-01','%Y-%d-%m');");
 					
-					mysqli_query($connid, "UPDATE `" . $db_settings['forum_table'] . "` SET
+					mysqli_query($connid, "UPDATE `" . $db_settings['forum_table'] . "_tmp` SET
 					`edited` = NULL
 					WHERE `edited` <= STR_TO_DATE('1900-01-01','%Y-%d-%m');");
 					
