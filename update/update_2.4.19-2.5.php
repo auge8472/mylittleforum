@@ -1119,9 +1119,8 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			
 			
-			
 			/**
-			 * From here on everything can be done as a transaction in one step
+			 * Everything regarding new, changed or removed datasets can be done as a transaction in one step
 			 */
 			if (empty($update['errors'])) {
 				mysqli_autocommit($connid, false);
