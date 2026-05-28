@@ -1386,6 +1386,9 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				if (empty($update['errors'])) {
 					if (!mysqli_query($connid, "DROP `". $db_settings['useronline_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
+				if (empty($update['errors'])) {
+					$update['status'][] = 'All outdated tables was removed from the database.';
+				}
 			}
 			
 			// write the new version number to the database
