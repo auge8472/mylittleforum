@@ -1328,7 +1328,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					if (!mysqli_query($connid, "RENAME `". $db_settings['useronline_table'] ."_tmp` TO `". $db_settings['useronline_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
 				if (empty($update['errors'])) {
-					$update['status'][] = 'All temporary tables was renamed to their original names.';
+					$update['status'][] = 'All temporary tables was renamed to their corresponding original names.';
 				}
 				
 				// delete all outdated *_old tables
