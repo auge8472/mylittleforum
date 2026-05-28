@@ -1194,7 +1194,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					WHERE `registered` <= STR_TO_DATE('1970-01-01','%Y-%d-%m');");
 					
 					
-					// change datasets in the user entries table
+					// change datasets in the entries table
 					mysqli_query($connid, "UPDATE `" . $db_settings['forum_table'] . "_tmp` SET
 					`last_reply` = NULL
 					WHERE `last_reply` <= STR_TO_DATE('1900-01-01','%Y-%d-%m');");
