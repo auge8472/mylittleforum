@@ -425,8 +425,8 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the bookmarks table
 			$statusTestBookmarksTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['bookmarks_table'] ."_tmp` 
-					LIKE `". $db_settings['bookmarks_table'] ."`;";
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['bookmark_table'] ."_tmp` 
+					LIKE `". $db_settings['bookmark_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarksTable = false;
@@ -435,8 +435,8 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 			}
 			if (empty($update['errors'])) {
-				$qCopyData = "INSERT `". $db_settings['bookmarks_table'] ."_tmp`
-					SELECT * FROM `". $db_settings['bookmarks_table'] ."`;";
+				$qCopyData = "INSERT `". $db_settings['bookmark_table'] ."_tmp`
+					SELECT * FROM `". $db_settings['bookmark_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyData)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarksTable = false;
@@ -445,7 +445,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 			}
 			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['bookmarks_table'] ."_tmp`
+				$qAlterTable = "ALTER TABLE `". $db_settings['bookmark_table'] ."_tmp`
 					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
 				if (!mysqli_query($connid, $qAlterTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -455,7 +455,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 			}
 			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['bookmarks_table'] ."_tmp`
+				$qAlterTable = "ALTER TABLE `". $db_settings['bookmark_table'] ."_tmp`
 					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
 					CHANGE `user_id` `user_id` int UNSIGNED NOT NULL,
 					CHANGE `posting_id` `posting_id` int UNSIGNED NOT NULL";
@@ -1218,7 +1218,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					if (!mysqli_query($connid, "RENAME `". $db_settings['banlists_table'] ."` TO `". $db_settings['banlists_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
 				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['bookmarks_table'] ."` TO `". $db_settings['bookmarks_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
+					if (!mysqli_query($connid, "RENAME `". $db_settings['bookmark_table'] ."` TO `". $db_settings['bookmark_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
 				if (empty($update['errors'])) {
 					if (!mysqli_query($connid, "RENAME `". $db_settings['bookmark_tags_table'] ."` TO `". $db_settings['bookmark_tags_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
@@ -1277,7 +1277,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					if (!mysqli_query($connid, "RENAME `". $db_settings['banlists_table'] ."_tmp` TO `". $db_settings['banlists_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
 				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['bookmarks_table'] ."_tmp` TO `". $db_settings['bookmarks_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
+					if (!mysqli_query($connid, "RENAME `". $db_settings['bookmark_table'] ."_tmp` TO `". $db_settings['bookmark_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
 				if (empty($update['errors'])) {
 					if (!mysqli_query($connid, "RENAME `". $db_settings['bookmark_tags_table'] ."_tmp` TO `". $db_settings['bookmark_tags_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
@@ -1336,7 +1336,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					if (!mysqli_query($connid, "DROP `". $db_settings['banlists_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
 				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['bookmarks_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
+					if (!mysqli_query($connid, "DROP `". $db_settings['bookmark_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
 				if (empty($update['errors'])) {
 					if (!mysqli_query($connid, "DROP `". $db_settings['bookmark_tags_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
