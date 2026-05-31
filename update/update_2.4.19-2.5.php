@@ -378,7 +378,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			if (empty($update['errors'])) {
 				$qCreateTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['banlists_table'] ."_tmp` (
 					`name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-					`list` text COLLATE=utf8mb4_general_ci NULL DEFAULT NULL,
+					`list` text COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
 					PRIMARY KEY (`name`)
 				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
 				if (!mysqli_query($connid, $qCreateTable) {
