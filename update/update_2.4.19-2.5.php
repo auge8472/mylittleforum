@@ -301,78 +301,6 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			if (!@mysqli_query($connid, "DROP TABLE IF EXISTS `" . $db_settings['uploads_table'] . "`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 			
 			
-			// create the new introduced tables
-			// as first make column mlf2_userdata.user_id unsigned
-			// to prevent error when creating table mlf2_uploads
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `" . $db_settings['userdata_table'] . "`
-					CHANGE `user_id` `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-				}
-			}
-			
-			// new tables
-			if (empty($update['errors'])) {
-				$qCreateTable = "CREATE TABLE IF NOT EXISTS `" . $db_settings['akismet_rating_table'] . "` (
-					`eid` int(11) NOT NULL,
-					`spam` tinyint(1) NOT NULL DEFAULT '0',
-					`spam_check_status` tinyint(1) NOT NULL DEFAULT '0',
-					PRIMARY KEY (`eid`), KEY `akismet_spam` (`spam`), KEY spam_check_status (spam_check_status)
-				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
-				if (!mysqli_query($connid, $qCreateTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-				} else {
-					$update['status'][] = 'Posting rating table for the Akismet filter created.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qCreateTable = "CREATE TABLE IF NOT EXISTS `" . $db_settings['b8_rating_table'] . "` (
-					`eid` int(11) NOT NULL,
-					`spam` tinyint(1) NOT NULL DEFAULT '0',
-					`training_type` tinyint(1) NOT NULL DEFAULT '0',
-					PRIMARY KEY (`eid`),
-					KEY `b8_spam` (`spam`),
-					KEY `B8_training_type` (`training_type`)
-				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
-				if (!mysqli_query($connid, $qCreateTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-				} else {
-					$update['status'][] = 'Posting rating table for the Bayesian filter created.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qCreateTable = "CREATE TABLE IF NOT EXISTS `" . $db_settings['b8_wordlist_table'] . "` (
-					`token` varchar(255) character set utf8mb4 collate utf8mb4_bin NOT NULL DEFAULT '',
-					`count_ham` int unsigned default NULL,
-					`count_spam` int unsigned default NULL,
-					PRIMARY KEY (`token`)
-				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_bin;";
-				if (!mysqli_query($connid, $qCreateTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-				} else {
-					$update['status'][] = 'Wordlist table for the Bayesian filter created.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qCreateTable = "CREATE TABLE IF NOT EXISTS `" . $db_settings['uploads_table'] . "` (
-					`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-					`uploader` int(10) UNSIGNED NULL,
-					`pathname` varchar(128) NOT NULL,
-					`tstamp` datetime NULL,
-					PRIMARY KEY (id),
-					UNIQUE KEY `pathname` (`pathname`),
-					CONSTRAINT `smbl_". $table_prefix ."uploader` FOREIGN KEY `fk_uploader` (`uploader`)
-						REFERENCES " . $db_settings['userdata_table'] . "(`user_id`) ON UPDATE CASCADE ON DELETE SET NULL
-				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_bin;";
-				if (!mysqli_query($connid, $qCreateTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-				} else {
-					$update['status'][] = 'Uploads table created.';
-				}
-			}
-			
-			
 			// changes in the banlist table
 			$statusTestBanlistsTable = true;
 			if (empty($update['errors'])) {
@@ -1021,6 +949,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['userdata_table'] ."_tmp`
+					CHANGE `user_id` `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT,
 					CHANGE `user_name` `user_name` VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
 					CHANGE `user_email` `user_email` VARCHAR(255) NOT NULL,
 					CHANGE `birthday` `birthday` DATE NULL DEFAULT NULL,
@@ -1080,16 +1009,38 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['useronline_table'] ."_tmp` 
 					LIKE `". $db_settings['useronline_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
+			// create the new introduced tables
+			if (empty($update['errors'])) {
+				$qCreateTable = "CREATE TABLE IF NOT EXISTS `" . $db_settings['akismet_rating_table'] . "` (
+					`eid` int(11) NOT NULL,
+					`spam` tinyint(1) NOT NULL DEFAULT '0',
+					`spam_check_status` tinyint(1) NOT NULL DEFAULT '0',
+					PRIMARY KEY (`eid`), KEY `akismet_spam` (`spam`), KEY spam_check_status (spam_check_status)
+				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+				if (!mysqli_query($connid, $qCreateTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserOnlineTable = false;
 				} else {
 					$update['status'][] = 'User online table copied.';
+				} else {
+					$update['status'][] = 'Posting rating table for the Akismet filter created.';
 				}
 			}
 			if (empty($update['errors'])) {
 				$qCopyData = "INSERT `". $db_settings['useronline_table'] ."_tmp`
 					SELECT * FROM `". $db_settings['useronline_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyData)) {
+			}
+			if (empty($update['errors'])) {
+				$qCreateTable = "CREATE TABLE IF NOT EXISTS `" . $db_settings['b8_rating_table'] . "` (
+					`eid` int(11) NOT NULL,
+					`spam` tinyint(1) NOT NULL DEFAULT '0',
+					`training_type` tinyint(1) NOT NULL DEFAULT '0',
+					PRIMARY KEY (`eid`),
+					KEY `b8_spam` (`spam`),
+					KEY `B8_training_type` (`training_type`)
+				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+				if (!mysqli_query($connid, $qCreateTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserOnlineTable = false;
 				} else {
@@ -1100,10 +1051,24 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				$qAlterTable = "ALTER TABLE `". $db_settings['useronline_table'] ."_tmp`
 					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
 				if (!mysqli_query($connid, $qAlterTable)) {
+				} else {
+					$update['status'][] = 'Posting rating table for the Bayesian filter created.';
+				}
+			}
+			if (empty($update['errors'])) {
+				$qCreateTable = "CREATE TABLE IF NOT EXISTS `" . $db_settings['b8_wordlist_table'] . "` (
+					`token` varchar(255) character set utf8mb4 collate utf8mb4_bin NOT NULL DEFAULT '',
+					`count_ham` int unsigned default NULL,
+					`count_spam` int unsigned default NULL,
+					PRIMARY KEY (`token`)
+				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_bin;";
+				if (!mysqli_query($connid, $qCreateTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserOnlineTable = false;
 				} else {
 					$update['status'][] = 'Structure of user online table altered.';
+				} else {
+					$update['status'][] = 'Wordlist table for the Bayesian filter created.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -1111,10 +1076,25 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					CHANGE `ip` `ip` VARCHAR(128) NOT NULL default '',
 					CHANGE `user_id` `user_id` int UNSIGNED DEFAULT '0'";
 				if (!mysqli_query($connid, $qAlterTable)) {
+			if (empty($update['errors'])) {
+				$qCreateTable = "CREATE TABLE IF NOT EXISTS `" . $db_settings['uploads_table'] . "` (
+					`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+					`uploader` int(10) UNSIGNED NULL,
+					`pathname` varchar(128) NOT NULL,
+					`tstamp` datetime NULL,
+					PRIMARY KEY (id),
+					UNIQUE KEY `pathname` (`pathname`),
+					CONSTRAINT `smbl_". $table_prefix ."uploader` FOREIGN KEY `fk_uploader` (`uploader`)
+						REFERENCES " . $db_settings['userdata_table'] . "_tmp(`user_id`) ON UPDATE CASCADE ON DELETE SET NULL
+				) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_bin;";
+				if (!mysqli_query($connid, $qCreateTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserOnlineTable = false;
 				} else {
 					$update['status'][] = 'Structure of columns in user online table altered.';
+				}
+				} else {
+					$update['status'][] = 'Uploads table created.';
 				}
 			}
 			
