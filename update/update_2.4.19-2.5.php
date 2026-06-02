@@ -1248,59 +1248,27 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 				
 				// delete all outdated *_old tables
+				$qDropOutdatedTables = "DROP TABLE
+					`". $db_settings['banlists_table'] ."_old`,
+					`". $db_settings['bookmark_table'] ."_old`,
+					`". $db_settings['bookmark_tags_table'] ."_old`,
+					`". $db_settings['category_table'] ."_old`,
+					`". $db_settings['forum_table'] ."_old`,
+					`". $db_settings['entry_cache_table'] ."_old`,
+					`". $db_settings['entry_tags_table'] ."_old`,
+					`". $db_settings['login_control_table'] ."_old`,
+					`". $db_settings['pages_table'] ."_old`,
+					`". $db_settings['read_status_table'] ."_old`,
+					`". $db_settings['settings_table'] ."_old`,
+					`". $db_settings['smilies_table'] ."_old`,
+					`". $db_settings['subscriptions_table'] ."_old`,
+					`". $db_settings['tags_table'] ."_old`,
+					`". $db_settings['temp_infos_table'] ."_old`,
+					`". $db_settings['userdata_table'] ."_old`,
+					`". $db_settings['userdata_cache_table'] ."_old`,
+					`". $db_settings['useronline_table'] ."_old`";
 				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['banlists_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['bookmark_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['bookmark_tags_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['category_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['entries_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['entry_cache_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['entry_tags_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['login_control_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['pages_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['read_status_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['settings_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['smilies_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['subscriptions_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['tags_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['temp_infos_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['userdata_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['userdata_cache_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "DROP `". $db_settings['useronline_table'] ."_old`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
+					if (!mysqli_query($connid, $qDropOutdatedTables)) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
 				if (empty($update['errors'])) {
 					$update['status'][] = 'All outdated tables was removed from the database.';
