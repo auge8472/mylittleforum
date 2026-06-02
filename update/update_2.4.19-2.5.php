@@ -1221,59 +1221,27 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 				
 				// rename the temporary tables to the original table names
+				$qRenameTempTables = "RENAME TABLE
+					`". $db_settings['banlists_table'] ."_tmp` TO `". $db_settings['banlists_table'] ."`,
+					`". $db_settings['bookmark_table'] ."_tmp` TO `". $db_settings['bookmark_table'] ."`,
+					`". $db_settings['bookmark_tags_table'] ."_tmp` TO `". $db_settings['bookmark_tags_table'] ."`,
+					`". $db_settings['category_table'] ."_tmp` TO `". $db_settings['category_table'] ."`,
+					`". $db_settings['forum_table'] ."_tmp` TO `". $db_settings['forum_table'] ."`,
+					`". $db_settings['entry_cache_table'] ."_tmp` TO `". $db_settings['entry_cache_table'] ."`,
+					`". $db_settings['entry_tags_table'] ."_tmp` TO `". $db_settings['entry_tags_table'] ."`,
+					`". $db_settings['login_control_table'] ."_tmp` TO `". $db_settings['login_control_table'] ."`,
+					`". $db_settings['pages_table'] ."_tmp` TO `". $db_settings['pages_table'] ."`,
+					`". $db_settings['read_status_table'] ."_tmp` TO `". $db_settings['read_status_table'] ."`,
+					`". $db_settings['settings_table'] ."_tmp` TO `". $db_settings['settings_table'] ."`,
+					`". $db_settings['smilies_table'] ."_tmp` TO `". $db_settings['smilies_table'] ."`,
+					`". $db_settings['subscriptions_table'] ."_tmp` TO `". $db_settings['subscriptions_table'] ."`,
+					`". $db_settings['tags_table'] ."_tmp` TO `". $db_settings['tags_table'] ."`,
+					`". $db_settings['temp_infos_table'] ."_tmp` TO `". $db_settings['temp_infos_table'] ."`,
+					`". $db_settings['userdata_table'] ."_tmp` TO `". $db_settings['userdata_table'] ."`,
+					`". $db_settings['userdata_cache_table'] ."_tmp` TO `". $db_settings['userdata_cache_table'] ."`,
+					`". $db_settings['useronline_table'] ."_tmp` TO `". $db_settings['useronline_table'] ."`";
 				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['banlists_table'] ."_tmp` TO `". $db_settings['banlists_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['bookmark_table'] ."_tmp` TO `". $db_settings['bookmark_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['bookmark_tags_table'] ."_tmp` TO `". $db_settings['bookmark_tags_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['category_table'] ."_tmp` TO `". $db_settings['category_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['entries_table'] ."_tmp` TO `". $db_settings['entries_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['entry_cache_table'] ."_tmp` TO `". $db_settings['entry_cache_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['entry_tags_table'] ."_tmp` TO `". $db_settings['entry_tags_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['login_control_table'] ."_tmp` TO `". $db_settings['login_control_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['pages_table'] ."_tmp` TO `". $db_settings['pages_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['read_status_table'] ."_tmp` TO `". $db_settings['read_status_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['settings_table'] ."_tmp` TO `". $db_settings['settings_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['smilies_table'] ."_tmp` TO `". $db_settings['smilies_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['subscriptions_table'] ."_tmp` TO `". $db_settings['subscriptions_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['tags_table'] ."_tmp` TO `". $db_settings['tags_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['temp_infos_table'] ."_tmp` TO `". $db_settings['temp_infos_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['userdata_table'] ."_tmp` TO `". $db_settings['userdata_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['userdata_cache_table'] ."_tmp` TO `". $db_settings['userdata_cache_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, "RENAME `". $db_settings['useronline_table'] ."_tmp` TO `". $db_settings['useronline_table'] ."`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
+					if (!mysqli_query($connid, $qRenameTempTables)) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 				}
 				if (empty($update['errors'])) {
 					$update['status'][] = 'All temporary tables was renamed to their corresponding original names.';
