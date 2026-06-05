@@ -592,7 +592,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				}
 			}
 			if (empty($update['errors'])) {
-				$qSearch4email_notification = "SHOW COLUMNS FROM `". $db_settings['forum_table'] ."`
+				$qSearch4email_notification = "SHOW COLUMNS FROM `". $db_settings['forum_table'] ."_tmp`
 					LIKE 'email_notification';";
 				$qAlterTable = "ALTER TABLE `". $db_settings['forum_table'] ."_tmp`
 					DROP `email_notification`";
