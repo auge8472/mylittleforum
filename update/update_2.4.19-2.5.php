@@ -355,7 +355,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the bookmarks table
 			$statusTestBookmarksTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['bookmark_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['bookmark_table'] ."_tmp`
 					LIKE `". $db_settings['bookmark_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -400,7 +400,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the bookmark tags table
 			$statusTestBookmarkTagsTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['bookmark_tags_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['bookmark_tags_table'] ."_tmp`
 					LIKE `". $db_settings['bookmark_tags_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -433,7 +433,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the categories table
 			$statusTestCategoriesTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['category_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['category_table'] ."_tmp`
 					LIKE `". $db_settings['category_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -476,7 +476,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the entry cache table
 			$statusTestEntriesCacheTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['entry_cache_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['entry_cache_table'] ."_tmp`
 					LIKE `". $db_settings['entry_cache_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -509,7 +509,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the entry tags table
 			$statusTestEntryTagsTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['entry_tags_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['entry_tags_table'] ."_tmp`
 					LIKE `". $db_settings['entry_tags_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -542,7 +542,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the forum/entries table
 			$statusTestEntriesTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['forum_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['forum_table'] ."_tmp`
 					LIKE `". $db_settings['forum_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -615,7 +615,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the login control table
 			$statusTestLoginControlTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['login_control_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['login_control_table'] ."_tmp`
 					LIKE `". $db_settings['login_control_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -658,7 +658,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the pages table
 			$statusTestPagesTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['pages_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['pages_table'] ."_tmp`
 					LIKE `". $db_settings['pages_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -701,7 +701,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the read entries table
 			$statusTestReadStatusTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['read_status_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['read_status_table'] ."_tmp`
 					LIKE `". $db_settings['read_status_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -734,7 +734,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the setting table
 			$statusTestSettingsTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['settings_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['settings_table'] ."_tmp`
 					LIKE `". $db_settings['settings_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -767,7 +767,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the smilies table
 			$statusTestSmiliesTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['smilies_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['smilies_table'] ."_tmp`
 					LIKE `". $db_settings['smilies_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -810,7 +810,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the subscriptions table
 			$statusTestSubscriptionsTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['subscriptions_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['subscriptions_table'] ."_tmp`
 					LIKE `". $db_settings['subscriptions_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -843,7 +843,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes of the tags table
 			$statusTestTagsTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['tags_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['tags_table'] ."_tmp`
 					LIKE `". $db_settings['tags_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -887,7 +887,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the temporary information table
 			$statusTestTempInfoTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['temp_infos_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['temp_infos_table'] ."_tmp`
 					LIKE `". $db_settings['temp_infos_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -920,7 +920,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the user data table
 			$statusTestUserdataTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['userdata_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['userdata_table'] ."_tmp`
 					LIKE `". $db_settings['userdata_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -975,7 +975,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the user data cache table
 			$statusTestUserdataCacheTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['userdata_cache_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['userdata_cache_table'] ."_tmp`
 					LIKE `". $db_settings['userdata_cache_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
@@ -1008,7 +1008,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// changes in the user online table
 			$statusTestUserOnlineTable = true;
 			if (empty($update['errors'])) {
-				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['useronline_table'] ."_tmp` 
+				$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['useronline_table'] ."_tmp`
 					LIKE `". $db_settings['useronline_table'] ."`;";
 				if (!mysqli_query($connid, $qCopyTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
