@@ -579,7 +579,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 							$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 							$statusTestEntriesTable = false;
 						} else {
-							$update['status'][] = 'Removed obsolete column email_notofications from the forum entries table.';
+							$update['status'][] = 'Removed obsolete column email_notification from the forum entries table.';
 						}
 					}
 				}
