@@ -376,16 +376,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['bookmark_table'] ."_tmp`
-					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-					$statusTestBookmarksTable = false;
-				} else {
-					$update['status'][] = 'Structure of bookmarks table altered.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['bookmark_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
 					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
 					CHANGE `user_id` `user_id` int UNSIGNED NOT NULL,
 					CHANGE `posting_id` `posting_id` int UNSIGNED NOT NULL";
@@ -393,7 +384,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestBookmarksTable = false;
 				} else {
-					$update['status'][] = 'Structure of columns in bookmarks table altered.';
+					$update['status'][] = 'Structure of table and columns in bookmarks table altered.';
 				}
 			}
 			
@@ -454,22 +445,13 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['category_table'] ."_tmp`
-					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-					$statusTestCategoriesTable = false;
-				} else {
-					$update['status'][] = 'Structure of categories table altered.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['category_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
 					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT";
 				if (!mysqli_query($connid, $qAlterTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestCategoriesTable = false;
 				} else {
-					$update['status'][] = 'Structure of columns in categories table altered.';
+					$update['status'][] = 'Structure of table and columns in categories table altered.';
 				}
 			}
 			
@@ -563,16 +545,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['forum_table'] ."_tmp`
-					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-					$statusTestEntriesTable = false;
-				} else {
-					$update['status'][] = 'Structure of forum entries table altered.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['forum_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
 					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
 					CHANGE `pid` `pid` int UNSIGNED NOT NULL DEFAULT '0',
 					CHANGE `tid` `tid` int UNSIGNED NOT NULL DEFAULT '0',
@@ -588,7 +561,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestEntriesTable = false;
 				} else {
-					$update['status'][] = 'Structure of columns in login control table altered.';
+					$update['status'][] = 'Structure of table and columns in login control table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
@@ -636,22 +609,13 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['login_control_table'] ."_tmp`
-					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-					$statusTestLoginControlTable = false;
-				} else {
-					$update['status'][] = 'Structure of login control table altered.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['login_control_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
 					CHANGE `ip` `ip` VARCHAR(128) NOT NULL default ''";
 				if (!mysqli_query($connid, $qAlterTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestLoginControlTable = false;
 				} else {
-					$update['status'][] = 'Structure of columns in login control table altered.';
+					$update['status'][] = 'Structure of table and columns in login control table altered.';
 				}
 			}
 			
@@ -679,22 +643,13 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['pages_table'] ."_tmp`
-					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-					$statusTestPagesTable = false;
-				} else {
-					$update['status'][] = 'Structure of pages table altered.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['pages_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
 					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT";
 				if (!mysqli_query($connid, $qAlterTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestPagesTable = false;
 				} else {
-					$update['status'][] = 'Structure of columns in pages table altered.';
+					$update['status'][] = 'Structure of table and columns in pages table altered.';
 				}
 			}
 			
@@ -788,22 +743,13 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['smilies_table'] ."_tmp`
-					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-					$statusTestSmiliesTable = false;
-				} else {
-					$update['status'][] = 'Structure of smilies table altered.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['smilies_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
 					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT";
 				if (!mysqli_query($connid, $qAlterTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestSmiliesTable = false;
 				} else {
-					$update['status'][] = 'Structure of columns in smilies table altered.';
+					$update['status'][] = 'Structure of table and columns in smilies table altered.';
 				}
 			}
 			
@@ -864,23 +810,14 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['tags_table'] ."_tmp`
-					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-					$statusTestTagsTable = false;
-				} else {
-					$update['status'][] = 'Structure of tags table altered.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['tags_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
 					CHANGE `tag` `tag` VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
 					CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT";
 				if (!mysqli_query($connid, $qAlterTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestTagsTable = false;
 				} else {
-					$update['status'][] = 'Structure of columns in tags table altered.';
+					$update['status'][] = 'Structure of table and columns in tags table altered.';
 				}
 			}
 			
@@ -941,16 +878,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['userdata_table'] ."_tmp`
-					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-					$statusTestUserdataTable = false;
-				} else {
-					$update['status'][] = 'Structure of userdata table altered.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['userdata_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
 					CHANGE `user_id` `user_id` int UNSIGNED NOT NULL AUTO_INCREMENT,
 					CHANGE `user_name` `user_name` VARCHAR(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
 					CHANGE `user_email` `user_email` VARCHAR(255) NOT NULL,
@@ -968,7 +896,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserdataTable = false;
 				} else {
-					$update['status'][] = 'Structure of columns in userdata table altered.';
+					$update['status'][] = 'Structure of table and columns in userdata table altered.';
 				}
 			}
 			
@@ -1029,23 +957,14 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			if (empty($update['errors'])) {
 				$qAlterTable = "ALTER TABLE `". $db_settings['useronline_table'] ."_tmp`
-					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
-				if (!mysqli_query($connid, $qAlterTable)) {
-					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
-					$statusTestUserOnlineTable = false;
-				} else {
-					$update['status'][] = 'Structure of user online table altered.';
-				}
-			}
-			if (empty($update['errors'])) {
-				$qAlterTable = "ALTER TABLE `". $db_settings['useronline_table'] ."_tmp`
+					CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
 					CHANGE `ip` `ip` VARCHAR(128) NOT NULL default '',
 					CHANGE `user_id` `user_id` int UNSIGNED DEFAULT '0'";
 				if (!mysqli_query($connid, $qAlterTable)) {
 					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
 					$statusTestUserOnlineTable = false;
 				} else {
-					$update['status'][] = 'Structure of columns in user online table altered.';
+					$update['status'][] = 'Structure of table and columns in user online table altered.';
 				}
 			}
 			
