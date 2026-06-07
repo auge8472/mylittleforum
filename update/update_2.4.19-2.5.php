@@ -1157,10 +1157,9 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					`". $db_settings['userdata_table'] ."` TO `". $db_settings['userdata_table'] ."_old`,
 					`". $db_settings['userdata_cache_table'] ."` TO `". $db_settings['userdata_cache_table'] ."_old`,
 					`". $db_settings['useronline_table'] ."` TO `". $db_settings['useronline_table'] ."_old`";
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, $qRenameOriginalTables)) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
+				if (!@mysqli_query($connid, $qRenameOriginalTables)) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+				} else {
 					$update['status'][] = 'All original tables was renamed to *_old.';
 				}
 			}
@@ -1186,10 +1185,9 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					`". $db_settings['userdata_table'] ."_tmp` TO `". $db_settings['userdata_table'] ."`,
 					`". $db_settings['userdata_cache_table'] ."_tmp` TO `". $db_settings['userdata_cache_table'] ."`,
 					`". $db_settings['useronline_table'] ."_tmp` TO `". $db_settings['useronline_table'] ."`";
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, $qRenameTempTables)) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
+				if (!@mysqli_query($connid, $qRenameTempTables)) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+				} else {
 					$update['status'][] = 'All temporary tables was renamed to their corresponding original names.';
 				}
 			}
@@ -1215,10 +1213,9 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					`". $db_settings['userdata_table'] ."_old`,
 					`". $db_settings['userdata_cache_table'] ."_old`,
 					`". $db_settings['useronline_table'] ."_old`";
-				if (empty($update['errors'])) {
-					if (!mysqli_query($connid, $qDropOutdatedTables)) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
-				}
-				if (empty($update['errors'])) {
+				if (!mysqli_query($connid, $qDropOutdatedTables)) {
+					$update['errors'][] = 'Database error in line '. (__LINE__ - 1) .': ' . mysqli_error($connid);
+				} else {
 					$update['status'][] = 'All outdated tables was removed from the database.';
 				}
 			}
