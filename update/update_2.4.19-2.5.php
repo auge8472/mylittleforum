@@ -1163,7 +1163,9 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				if (empty($update['errors'])) {
 					$update['status'][] = 'All original tables was renamed to *_old.';
 				}
-				
+			}
+			
+			if (empty($update['errors'])) {
 				// rename the temporary tables to the original table names
 				$qRenameTempTables = "RENAME TABLE
 					`". $db_settings['banlists_table'] ."_tmp` TO `". $db_settings['banlists_table'] ."`,
@@ -1190,7 +1192,9 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 				if (empty($update['errors'])) {
 					$update['status'][] = 'All temporary tables was renamed to their corresponding original names.';
 				}
-				
+			}
+			
+			if (empty($update['errors'])) {
 				// delete all outdated *_old tables
 				$qDropOutdatedTables = "DROP TABLE
 					`". $db_settings['banlists_table'] ."_old`,
