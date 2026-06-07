@@ -19,6 +19,7 @@ if($_SESSION[$settings['session_prefix'].'user_type']!=2) exit;
 // defaults to these values with PHP 8.1 and newer
 // but is needed for older PHP versions because it
 // defaults to MYSQLI_REPORT_OFF there 
+// Attention: for specific sections it will be reset to MYSQLI_REPORT_OFF and on again.
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // update data:
@@ -294,6 +295,12 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			fwrite($db_settings_fp, $db_settings_file);
 			flock($db_settings_fp, 3);
 			fclose($db_settings_fp);
+			
+			// Set MySQL error reporting to MYSQLI_REPORT_OFF because otherwise
+			// the mechanism with $update['errors'][] wouldn't work!
+			// The reporting has to be reset to MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT
+			// again before the section with the transaction begins!
+			mysqli_report(MYSQLI_REPORT_OFF);
 			// drop possibly existing new tables from previous tests with a pre release
 			if (!@mysqli_query($connid, "DROP TABLE IF EXISTS `" . $db_settings['akismet_rating_table'] . "`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
 			if (!@mysqli_query($connid, "DROP TABLE IF EXISTS `" . $db_settings['b8_rating_table'] . "`")) $update['errors'][] = 'Database error in line '.__LINE__.': ' . mysqli_error($connid);
@@ -1030,6 +1037,9 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			
 			
+			// Set the error reporting back to MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT
+			// to make the reporting working in the try-catch-block.
+			mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			/**
 			 * Everything regarding new, changed or removed datasets can be done as a transaction in one step
 			 */
@@ -1123,6 +1133,9 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			}
 			
 			
+			// Set MySQL error reporting to MYSQLI_REPORT_OFF because otherwise
+			// the mechanism with $update['errors'][] wouldn't work!
+			mysqli_report(MYSQLI_REPORT_OFF);
 			if (empty($update['errors'])) {
 				// rename the original tables
 				$qRenameOriginalTables = "RENAME TABLE
