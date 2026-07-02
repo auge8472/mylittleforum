@@ -427,6 +427,19 @@ function capsuledPreventDefault(event) {
 	event.preventDefault();
 }
 
+function getCapsLock(thisEl) {
+	const mBox = thisEl.target.closest('div').querySelector('.notice.caution');
+	if (thisEl.getModifierState("CapsLock")) {
+		if (mBox.hasAttribute('hidden')) {
+			mBox.hidden = false;
+		}
+	} else {
+		if (!mBox.hasAttribute('hidden')) {
+			mBox.hidden = true;
+		}
+	}
+}
+
 /************************ MyLittleForum-Objekte *************************************/
 
 	/**
