@@ -39,6 +39,7 @@ unknown_user =                    'Okänd'
 db_error =                        'Databasfel!'
 mail_error =                      'Mail server inte tillgänglig - försök senare!'
 forum_disabled_admin_message =    '<!-- TODO -->The forum is currently disabled. Enable it in the forum settings.'
+capslock_warning_message =        '<!-- TODO --><strong>Attention</strong>: The caps lock key is enabled!'
 
 [general]
 subject =                         'Ämne'

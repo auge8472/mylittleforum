@@ -38,6 +38,7 @@ unknown_user =              'ukendt'
 db_error =                  'Database fejl!'
 mail_error =                'Mail server ikke tilgængelig - prøv venligst igen senere!'
 forum_disabled_admin_message =    '<!-- TODO -->The forum is currently disabled. Enable it in the forum settings.'
+capslock_warning_message =        '<!-- TODO --><strong>Attention</strong>: The caps lock key is enabled!'
 
 [general]
 subject =                   'Emne'

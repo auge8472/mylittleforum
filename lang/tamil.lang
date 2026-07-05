@@ -35,6 +35,7 @@ unknown_user =                    'தெரியாதவர்'
 db_error =                        'டேடாபேஸின் தவரு!'
 mail_error =                      'மின் அஞ்சல் சேவை காணவில்லை - தயவு செய்து மீண்டும் முயற்சிக்கவும்!'
 forum_disabled_admin_message =    '<!-- TODO -->The forum is currently disabled. Enable it in the forum settings.'
+capslock_warning_message =        '<!-- TODO --><strong>Attention</strong>: The caps lock key is enabled!'
 
 [general]
 subject =                         'பாடம்'

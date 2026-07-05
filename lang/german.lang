@@ -39,6 +39,7 @@ unknown_user =                    'unbekannt'
 db_error =                        'Datenbankfehler!'
 mail_error =                      'Mailserver nicht erreichbar – bitte später nochmal versuchen!'
 forum_disabled_admin_message =    'Das Forum ist außer Betrieb. Es kann in den Forumseinstellungen aktiviert werden.'
+capslock_warning_message =        '<strong>Achtung</strong>: Die Feststelltaste ist aktivert!'
 
 [general]
 subject =                         'Betreff'

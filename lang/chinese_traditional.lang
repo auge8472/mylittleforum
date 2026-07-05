@@ -38,6 +38,7 @@ unknown_user =                    '訪客'
 db_error =                        '資料庫錯誤！'
 mail_error =                      '郵件伺服器無法使用，請稍後再試！'
 forum_disabled_admin_message =    '<!-- TODO -->The forum is currently disabled. Enable it in the forum settings.'
+capslock_warning_message =        '<!-- TODO --><strong>Attention</strong>: The caps lock key is enabled!'
 
 [general]
 subject =                         '標題'

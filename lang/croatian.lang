@@ -38,6 +38,7 @@ unknown_user =                    'nepoznat'
 db_error =                        'Greška na bazi!'
 mail_error =                      'Mail poslužitelj nije dostupan - pokušajte kasnije!'
 forum_disabled_admin_message =    '<!-- TODO -->The forum is currently disabled. Enable it in the forum settings.'
+capslock_warning_message =        '<!-- TODO --><strong>Attention</strong>: The caps lock key is enabled!'
 
 [general]
 subject =                         'Tema'

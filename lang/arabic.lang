@@ -35,6 +35,7 @@ unknown_user =                    'مستخدم غير معروف'
 db_error =                        'خطأ في قاعدة البيانات!'
 mail_error =                      'خادم البريد ليس متوفر الآن - الرجاء المحاولة مرةً أخرى لاحقًا!'
 forum_disabled_admin_message =    '<!-- TODO -->The forum is currently disabled. Enable it in the forum settings.'
+capslock_warning_message =        '<!-- TODO --><strong>Attention</strong>: The caps lock key is enabled!'
 
 [general]
 subject =                         'عنوان'
