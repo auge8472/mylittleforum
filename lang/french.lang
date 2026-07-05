@@ -42,6 +42,7 @@ unknown_user =                    'inconnu'
 db_error =                        'Erreur base données !'
 mail_error =                      'Serveur de email indisponible - veuillez réessayer plus tard !'
 forum_disabled_admin_message =    '<!-- TODO -->The forum is currently disabled. Enable it in the forum settings.'
+capslock_warning_message =        '<!-- TODO --><strong>Attention</strong>: The caps lock key is enabled!'
 
 [general]
 subject =                         'Sujet'

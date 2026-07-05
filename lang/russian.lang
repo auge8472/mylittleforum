@@ -48,6 +48,7 @@ unknown_user =                    'неизвестный'
 db_error =                        'Ошибка базы данных!'
 mail_error =                      'Почтовый сервер недоступен - пожалуйста, попробуйте позже!'
 forum_disabled_admin_message =    '<!-- TODO -->The forum is currently disabled. Enable it in the forum settings.'
+capslock_warning_message =        '<!-- TODO --><strong>Attention</strong>: The caps lock key is enabled!'
 
 [general]
 subject =                         'Тема'
