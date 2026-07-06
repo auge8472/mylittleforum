@@ -17,6 +17,7 @@
  <div>
   <label for="password">{#remove_user_confirm_password#}</label>
   <input id="password" type="password" name="user_password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" autofocus required />
+  <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div>
   <button name="remove_account_submit" value="{#submit_button_ok#}">{#submit_button_ok#}</button>

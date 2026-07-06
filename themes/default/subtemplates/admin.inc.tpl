@@ -974,6 +974,7 @@
  <div>
   <label for="confirm_pw_reset" class="main">{#admin_confirm_password#}</label>
   <input type="password" id="confirm_pw_reset" name="confirm_pw" spellcheck="false" autocomplete="off" writingsuggestions="false" size="20" />
+  <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div class="buttonbar">
   <button name="reset_forum_confirmed" value="{#reset_forum_submit#}">{#reset_forum_submit#}</button>
@@ -990,6 +991,7 @@
  <div>
   <label for="confirm_pw_uninstall" class="main">{#admin_confirm_password#}</label>
   <input type="password" id="confirm_pw_uninstall" name="confirm_pw" spellcheck="false" autocomplete="off" writingsuggestions="false" size="20" />
+  <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div class="buttonbar">
   <button name="uninstall_forum_confirmed" value="{#uninstall_forum_submit#}">{#uninstall_forum_submit#}</button>
@@ -1030,6 +1032,7 @@
  <div>
   <label for="id_update_password">{#admin_confirm_password#}</label>
   <input type="password" name="update_password" id="id_update_password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" />
+  <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div class="buttonbar">
   <button name="update_submit" value="{#update_submit#}" onclick="document.getElementById('throbber-submit').removeAttribute('hidden');">{#update_submit#}</button>

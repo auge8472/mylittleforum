@@ -14,10 +14,12 @@
  <div>
   <label for="old-pw">{#edit_pw_old#}</label>
   <input type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="old_pw" id="old-pw" autofocus required />
+  <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div>
   <label for="new-pw">{#edit_pw_new#}</label>
   <input type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="new_pw" id="new-pw" maxlength="255" required />
+  <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div>
   <button name="edit_pw_submit" value="{#submit_button_ok#}">{#submit_button_ok#}</button>
