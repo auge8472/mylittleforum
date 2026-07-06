@@ -24,6 +24,7 @@
  <div>
   <label for="pw_new_email" class="main">{#edit_email_pw#}</label>
   <input id="pw_new_email" type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="pw_new_email" required />
+  <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div>
   <button name="edit_email_submit" value="{#submit_button_ok#}">{#submit_button_ok#}</button>

@@ -19,6 +19,7 @@
    <div>
     <label for="password" class="main">{#login_password#}</label>
     <input id="password" class="login" type="password" name="userpw" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" required />
+    <p class="notice caution" hidden>{#capslock_warning_message#}</p>
    </div>
 {if $settings.autologin==1}
    <div class="normalform">
