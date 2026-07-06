@@ -762,18 +762,29 @@
 </ul>
 {/if}
 <form action="index.php" method="post" accept-charset="{#charset#}">
-<div>
-<input type="hidden" name="mode" value="admin" />
-<input type="hidden" name="csrf_token" value="{$CSRF_TOKEN}" />
-<p><label for="ar_username" class="main">{#register_username#}</label><br />
-<input id="ar_username" type="text" size="25" name="ar_username" value="{$ar_username|default:''}" maxlength="{$settings.name_maxlength}" /></p>
-<p><label for="ar_email" class="main">{#register_email#}</label><br />
-<input id="ar_email" type="text" size="25" name="ar_email" value="{$ar_email|default:''}" maxlength="{$settings.email_maxlength}" /></p>
-<p><label for="ar_pw" class="main">{#register_pw#}</label><br />
-<input id="ar_pw" type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="ar_pw" maxlength="50" /></p>
-<p><input id="ar_send_userdata" type="checkbox" name="ar_send_userdata" value="true"{if $ar_send_userdata} checked="checked"{/if} /> <label for="ar_send_userdata">{#register_send_userdata#}</label></p>
-<p><input type="submit" name="register_submit" value="{#submit_button_ok#}" /></p>
-</div>
+ <input type="hidden" name="mode" value="admin" />
+ <input type="hidden" name="csrf_token" value="{$CSRF_TOKEN}" />
+ <div>
+  <label for="ar_username" class="main">{#register_username#}</label>
+  <input id="ar_username" type="text" size="25" name="ar_username" value="{$ar_username|default:''}" maxlength="{$settings.name_maxlength}" />
+ </div>
+ <div>
+  <label for="ar_email" class="main">{#register_email#}</label>
+  <input id="ar_email" type="text" size="25" name="ar_email" value="{$ar_email|default:''}" maxlength="{$settings.email_maxlength}" />
+ </div>
+ <div>
+  <label for="ar_pw" class="main">{#register_pw#}</label>
+  <input id="ar_pw" type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="ar_pw" maxlength="50" />
+  <p class="notice caution" hidden>{#capslock_warning_message#}</p>
+ </div>
+ <div>
+  <ul>
+   <li><input id="ar_send_userdata" type="checkbox" name="ar_send_userdata" value="true"{if $ar_send_userdata} checked="checked"{/if} /><label for="ar_send_userdata">{#register_send_userdata#}</label></li>
+  </ul>
+ </div>
+ <div class="buttonbar">
+  <button name="register_submit" value="{#submit_button_ok#}">{#submit_button_ok#}</button>
+ </div>
 </form>
 <p class="small">{#register_exp#}</p>
 {elseif $action=='smilies'}
