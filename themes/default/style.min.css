@@ -145,6 +145,7 @@ ul.openthread{clear:both}
 .notice.spam{padding:.5em}
 .notice.spam,.notice.caution{border-color:#882008}
 .notice.caution,.notice.spam{background:#ffffb8 url(images/general-caution.svg) no-repeat .55em .55em/1.5em}
+:is(#reg_pw, #new-pw, #old-pw, #pw_new_email, #password, #id_update_password, #confirm_pw_uninstall, #confirm_pw_reset, #ar_pw) ~ .notice{margin-block:.25em .5em;width:fit-content}
 html[dir="rtl"] .notice.caution,html[dir="rtl"] .notice.spam{background-position-x:calc(100% - .5em)}
 .notice.ok{background:#afc url(images/tick.svg) no-repeat .55em .55em/1.5em;border-color:#086620}
 html[dir="rtl"] .notice.ok{background-position-x:calc(100% - .55em)}
