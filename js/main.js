@@ -1223,7 +1223,9 @@ function getCapsLock(thisEl) {
 							if (fields[j].type == "password") {
 								var passwordField = fields[j];
 								// lang["fold_postings_title"]
-								var cb = document.createElementWithAttributes("input", {"type": "checkbox", "checked": false, "value": false, "field": passwordField, "title": lang["show_password_title"]}, passwordField.parentNode);
+]
+								var cb = document.createElementWithAttributes("input", {"type": "checkbox", "checked": false, "value": false, "field": passwordField, "title": lang["show_password_title"]});
+								passwordField.insertAdjacentElement('afterend', cb);
 								cb.onclick = function(e) {
 									var isShown = this.field.type == "text";
 									this.value = isShown;
