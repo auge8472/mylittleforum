@@ -22,8 +22,8 @@
    </div>
 
    <div>
-    <label for="reg_pw" class="main">{#register_pw#}</label>
-    <input id="reg_pw" class="login" type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="30" name="{$fld_pword}" maxlength="255" required />
+    <label for="password" class="main">{#register_pw#}</label>
+    <input id="password" class="login" type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="30" name="{$fld_pword}" maxlength="255" required />
     <p class="notice caution" hidden>{#capslock_warning_message#}</p>
    </div>
 

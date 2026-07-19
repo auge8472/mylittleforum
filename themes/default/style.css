@@ -746,7 +746,7 @@ ul.openthread {
 .notice.spam {
 	background: #ffffb8 url(images/general-caution.svg) no-repeat 0.55em 0.55em/1.5em;
 }
-:is(#reg_pw, #new-pw, #old-pw, #pw_new_email, #password, #id_update_password, #confirm_pw_uninstall, #confirm_pw_reset, #ar_pw) ~ .notice {
+:is(#password-new, #password) ~ .notice {
 	margin-block: 0.25em 0.5em;
 	width: fit-content;
 }

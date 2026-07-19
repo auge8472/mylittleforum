@@ -1513,8 +1513,8 @@ function getCapsLock(thisEl) {
 			mlf.init(ajaxPreviewStructure);
 		new DragAndDropTable(document.getElementById("sortable"), "bookmarks", "mode", "admin", "action");
 		// search for password input fields to monitor whether the Caps Lock key is pressed or not
-		const fldPassWords = document.querySelectorAll('#reg_pw, #new-pw, #old-pw, #pw_new_email, #password, #id_update_password, #confirm_pw_uninstall, #confirm_pw_reset, #ar_pw');
 		// do NOT use the input type 'password' for searching because we change it for looking at the passwords to 'text'
+		const fldPassWords = document.querySelectorAll('#password-new, #password');
 		if (fldPassWords.length > 0)
 			fldPassWords.forEach(fldPassWords => fldPassWords.addEventListener("keyup", getCapsLock.bind(this)));
 	});
