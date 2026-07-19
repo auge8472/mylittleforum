@@ -773,8 +773,8 @@
   <input id="ar_email" type="text" size="25" name="ar_email" value="{$ar_email|default:''}" maxlength="{$settings.email_maxlength}" />
  </div>
  <div>
-  <label for="ar_pw" class="main">{#register_pw#}</label>
-  <input id="ar_pw" type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="ar_pw" maxlength="50" />
+  <label for="password" class="main">{#register_pw#}</label>
+  <input id="password" type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="ar_pw" maxlength="50" />
   <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div>
@@ -983,8 +983,8 @@
   </ul>
  </div>
  <div>
-  <label for="confirm_pw_reset" class="main">{#admin_confirm_password#}</label>
-  <input type="password" id="confirm_pw_reset" name="confirm_pw" spellcheck="false" autocomplete="off" writingsuggestions="false" size="20" />
+  <label for="password" class="main">{#admin_confirm_password#}</label>
+  <input type="password" id="password" name="confirm_pw" spellcheck="false" autocomplete="off" writingsuggestions="false" size="20" />
   <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div class="buttonbar">
@@ -1000,8 +1000,8 @@
  <input type="hidden" name="mode" value="admin" />
  <input type="hidden" name="csrf_token" value="{$CSRF_TOKEN}" />
  <div>
-  <label for="confirm_pw_uninstall" class="main">{#admin_confirm_password#}</label>
-  <input type="password" id="confirm_pw_uninstall" name="confirm_pw" spellcheck="false" autocomplete="off" writingsuggestions="false" size="20" />
+  <label for="password" class="main">{#admin_confirm_password#}</label>
+  <input type="password" id="password" name="confirm_pw" spellcheck="false" autocomplete="off" writingsuggestions="false" size="20" />
   <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div class="buttonbar">
@@ -1041,8 +1041,8 @@
  <input type="hidden" name="update_file_submit" value="{$update_file}" />
  <input type="hidden" name="csrf_token" value="{$CSRF_TOKEN}" />
  <div>
-  <label for="id_update_password">{#admin_confirm_password#}</label>
-  <input type="password" name="update_password" id="id_update_password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" />
+  <label for="password">{#admin_confirm_password#}</label>
+  <input type="password" name="update_password" id="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" />
   <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div class="buttonbar">

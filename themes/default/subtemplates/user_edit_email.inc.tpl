@@ -22,8 +22,8 @@
   <input id="new_email_confirm" type="email" size="25" name="new_email_confirm" value="" maxlength="{$settings.email_maxlength}" required />
  </div>
  <div>
-  <label for="pw_new_email" class="main">{#edit_email_pw#}</label>
-  <input id="pw_new_email" type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="pw_new_email" required />
+  <label for="password" class="main">{#edit_email_pw#}</label>
+  <input id="password" type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="pw_new_email" required />
   <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div>

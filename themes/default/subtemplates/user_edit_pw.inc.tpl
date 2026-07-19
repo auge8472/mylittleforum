@@ -12,13 +12,13 @@
  <input type="hidden" name="csrf_token" value="{$CSRF_TOKEN}" />
  <input type="hidden" name="mode" value="user" />
  <div>
-  <label for="old-pw">{#edit_pw_old#}</label>
-  <input type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="old_pw" id="old-pw" autofocus required />
+  <label for="password">{#edit_pw_old#}</label>
+  <input type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="old_pw" id="password" autofocus required />
   <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div>
-  <label for="new-pw">{#edit_pw_new#}</label>
-  <input type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="new_pw" id="new-pw" maxlength="255" required />
+  <label for="password-new">{#edit_pw_new#}</label>
+  <input type="password" spellcheck="false" autocomplete="off" writingsuggestions="false" size="25" name="new_pw" id="password-new" maxlength="255" required />
   <p class="notice caution" hidden>{#capslock_warning_message#}</p>
  </div>
  <div>
