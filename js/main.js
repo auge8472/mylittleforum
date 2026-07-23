@@ -1211,29 +1211,26 @@ function getCapsLock(thisEl) {
 		
 		/**
 		 * Add a checkbox to an INPUT element of type PASSWORD to show/hide the entered password
+		 * and toggle a warning message below the password input field íf the capslock key is active
 		 */
 		var togglePasswordVisibility = function() {
-			if (document.getElementById("content")) {
-				var f = document.getElementById("content").getElementsByTagName("form");
-				if (f && f.length>0) {
-					var passwordFields = [];
-					for (var i=0; i<f.length; i++) {
-						var fields = f[i].getElementsByTagName("input");
-						for (var j=0; j<fields.length; j++) {
-							if (fields[j].type == "password") {
-								var passwordField = fields[j];
-								// lang["fold_postings_title"]
-]
-								var cb = document.createElementWithAttributes("input", {"type": "checkbox", "checked": false, "value": false, "field": passwordField, "title": lang["show_password_title"]});
-								passwordField.insertAdjacentElement('afterend', cb);
-								cb.onclick = function(e) {
-									var isShown = this.field.type == "text";
-									this.value = isShown;
-									this.title = isShown ? lang["show_password_title"] : lang["hide_password_title"];
-									this.field.type  = isShown ? "password" : "text";
-								};
-							}
-						}
+			if (document.querySelector('main')) {
+				// search for password input fields to add the visibility toggle
+				// and to monitor whether the Caps Lock key is pressed or not
+				// do NOT use the input type 'password' for searching because
+				// we change it for looking at the passwords to 'text'
+				const pwfs = document.querySelectorAll('#password-new, #password');
+				if (pwfs && pwfs.length > 0) {
+					for (let pwf of pwfs) {
+						pwf.addEventListener("keyup", getCapsLock.bind(this));
+						const cb = document.createElementWithAttributes("input", {"type": "checkbox", "checked": false, "value": false, "field": pwf, "title": lang["show_password_title"]});
+						pwf.insertAdjacentElement('afterend', cb);
+						cb.onclick = function(e) {
+							var isShown = this.field.type == "text";
+							this.value = isShown;
+							this.title = isShown ? lang["show_password_title"] : lang["hide_password_title"];
+							this.field.type  = isShown ? "password" : "text";
+						};
 					}
 				}
 			}
@@ -1512,9 +1509,4 @@ function getCapsLock(thisEl) {
 		if (mlf && typeof lang == "object") 
 			mlf.init(ajaxPreviewStructure);
 		new DragAndDropTable(document.getElementById("sortable"), "bookmarks", "mode", "admin", "action");
-		// search for password input fields to monitor whether the Caps Lock key is pressed or not
-		// do NOT use the input type 'password' for searching because we change it for looking at the passwords to 'text'
-		const fldPassWords = document.querySelectorAll('#password-new, #password');
-		if (fldPassWords.length > 0)
-			fldPassWords.forEach(fldPassWords => fldPassWords.addEventListener("keyup", getCapsLock.bind(this)));
 	});
