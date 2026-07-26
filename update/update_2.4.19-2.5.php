@@ -566,7 +566,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
 					$statusTestEntriesTable = false;
 				} else {
-					$update['status'][] = 'Structure of table and columns in login control table altered.';
+					$update['status'][] = 'Structure of table and columns in forum entries table altered.';
 				}
 			}
 			if (empty($update['errors'])) {
