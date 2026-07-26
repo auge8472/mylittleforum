@@ -561,9 +561,7 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 					CHANGE `category` `category` int UNSIGNED NOT NULL DEFAULT '0',
 					CHANGE `views` `views` int UNSIGNED NULL DEFAULT '0',
 					CHANGE `last_reply` `last_reply` TIMESTAMP NULL DEFAULT NULL,
-					CHANGE `edited` `edited` TIMESTAMP NULL DEFAULT NULL,
-					DROP `spam`,
-					DROP `spam_check_status`;";
+					CHANGE `edited` `edited` TIMESTAMP NULL DEFAULT NULL;";
 				if (!@mysqli_query($connid, $qAlterTable)) {
 					$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
 					$statusTestEntriesTable = false;
@@ -1136,6 +1134,18 @@ if (empty($update['errors']) && in_array($settings['version'], array('2.4.19', '
 			// Set MySQL error reporting to MYSQLI_REPORT_OFF because otherwise
 			// the mechanism with $update['errors'][] wouldn't work!
 			mysqli_report(MYSQLI_REPORT_OFF);
+			if (empty($update['errors'])) {
+				$qAlterTable = "ALTER TABLE `". $db_settings['forum_table'] ."_tmp`
+					DROP `spam`,
+					DROP `spam_check_status`;";
+				if (!@mysqli_query($connid, $qAlterTable)) {
+					$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+					$statusTestEntriesTable = false;
+				} else {
+					$update['status'][] = 'Obsoloete columns in forum entries table deleted.';
+				}
+			}
+			
 			if (empty($update['errors'])) {
 				// rename the original tables
 				$qRenameOriginalTables = "RENAME TABLE
