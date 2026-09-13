@@ -5504,6 +5504,79 @@ if (empty($update['errors']) && in_array($settings['version'], array('20241215.1
 }
 
 if (empty($update['errors']) && in_array($settings['version'], array('20250323.1'))) {
+	// Set MySQL error reporting to MYSQLI_REPORT_OFF because otherwise
+	// the mechanism with $update['errors'][] wouldn't work!
+	// The reporting has to be reset to MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT
+	// again before the section with the transaction begins!
+	mysqli_report(MYSQLI_REPORT_OFF);
+	
+	// changes of the tags table
+	$statusTestTagsTable = true;
+	if (empty($update['errors'])) {
+		$qCopyTable = "CREATE TABLE IF NOT EXISTS `". $db_settings['tags_table'] ."_tmp`
+			LIKE `". $db_settings['tags_table'] ."`;";
+		if (!@mysqli_query($connid, $qCopyTable)) {
+			$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+			$statusTestTagsTable = false;
+		} else {
+			$update['status'][] = 'Tags table copied.';
+		}
+	}
+	if (empty($update['errors'])) {
+		$qCopyData = "INSERT `". $db_settings['tags_table'] ."_tmp`
+			SELECT * FROM `". $db_settings['tags_table'] ."`;";
+		if (!@mysqli_query($connid, $qCopyData)) {
+			$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+			$statusTestTagsTable = false;
+		} else {
+			$update['status'][] = 'Data of tags table copied.';
+		}
+	}
+	if (empty($update['errors'])) {
+		$qCleaningData = "DELETE FROM `" . $db_settings['tags_table'] . "_tmp`
+			WHERE `id`= 0";
+		if (!@mysqli_query($connid, $qCleaningData)) {
+			$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+			$statusTestTagsTable = false;
+		} else {
+			$update['status'][] = 'Data of tags table cleaned (tags with id = 0).';
+		}
+	}
+	if (empty($update['errors'])) {
+		$qCleaningData = "DELETE FROM `" . $db_settings['entry_tags_table'] . "`
+			WHERE `tid`= 0";
+		if (!@mysqli_query($connid, $qCleaningData)) {
+			$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+			$statusTestTagsTable = false;
+		} else {
+			$update['status'][] = 'Data of entry tags table cleaned (entry tags with tid = 0).';
+		}
+	}
+	if (empty($update['errors'])) {
+		$qCleaningData = "DELETE FROM `" . $db_settings['bookmark_tags_table'] . "`
+			WHERE `tid`= 0";
+		if (!@mysqli_query($connid, $qCleaningData)) {
+			$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+			$statusTestTagsTable = false;
+		} else {
+			$update['status'][] = 'Data of bookmark tags table cleaned (bookmark tags with tid = 0).';
+		}
+	}
+	if (empty($update['errors'])) {
+		$qAlterTable = "ALTER TABLE `". $db_settings['tags_table'] ."_tmp`
+			CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT;";
+		if (!@mysqli_query($connid, $qAlterTable)) {
+			$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+			$statusTestTagsTable = false;
+		} else {
+			$update['status'][] = 'Structure of table and columns in tags table altered.';
+		}
+	}
+	
+	
+	// Set the error reporting back to MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT
+	// to make the reporting working in the try-catch-block.
+	mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 	/**
 	 * From here on everything can be done as a transaction in one step
 	 */
@@ -5516,20 +5589,6 @@ if (empty($update['errors']) && in_array($settings['version'], array('20250323.1
 				mysqli_query($connid, "INSERT INTO `" . $db_settings['settings_table'] . "` (`name`, `value`)
 				VALUES ('bbcode_media', '0');");
 				
-				
-				// changes in the tags table
-				// delete failed tags (with id/tid = 0) in preparation
-				// of the correction of definition of column mlf2_tags.id
-				mysqli_query($connid, "DELETE FROM `" . $db_settings['tags_table'] . "`
-				WHERE `id`= 0");
-				mysqli_query($connid, "DELETE FROM `" . $db_settings['entry_tags_table'] . "`
-				WHERE `tid`= 0");
-				mysqli_query($connid, "DELETE FROM `" . $db_settings['bookmark_tags_table'] . "`
-				WHERE `tid`= 0");
-				
-				mysqli_query($connid, "ALTER TABLE `" . $db_settings['tags_table'] . "`
-				CHANGE `id` `id` int UNSIGNED NOT NULL AUTO_INCREMENT;");
-				
 				mysqli_commit($connid);
 			} catch (mysqli_sql_exception $exception) {
 				mysqli_rollback($connid);
@@ -5537,6 +5596,43 @@ if (empty($update['errors']) && in_array($settings['version'], array('20250323.1
 			}
 		}
 		mysqli_autocommit($connid, true);
+	}
+	
+	// Set MySQL error reporting to MYSQLI_REPORT_OFF because otherwise
+	// the mechanism with $update['errors'][] wouldn't work!
+	mysqli_report(MYSQLI_REPORT_OFF);
+	
+	if (empty($update['errors'])) {
+		// rename the original tables
+		$qRenameOriginalTables = "RENAME TABLE
+			`". $db_settings['tags_table'] ."` TO `". $db_settings['tags_table'] ."_old`";
+		if (!@mysqli_query($connid, $qRenameOriginalTables)) {
+			$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+		} else {
+			$update['status'][] = 'All original tables was renamed to *_old.';
+		}
+	}
+	
+	if (empty($update['errors'])) {
+		// rename the temporary tables to the original table names
+		$qRenameTempTables = "RENAME TABLE
+			`". $db_settings['tags_table'] ."_tmp` TO `". $db_settings['tags_table'] ."`";
+		if (!@mysqli_query($connid, $qRenameTempTables)) {
+			$update['errors'][] = "'Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+		} else {
+			$update['status'][] = 'All temporary tables was renamed to their corresponding original names.';
+		}
+	}
+	
+	if (empty($update['errors'])) {
+		// delete all outdated *_old tables
+		$qDropOutdatedTables = "DROP TABLE
+			`". $db_settings['tags_table'] ."_old`";
+		if (!mysqli_query($connid, $qDropOutdatedTables)) {
+			$update['errors'][] = "Database error in line ". (__LINE__ - 1) .":\n" . mysqli_error($connid);
+		} else {
+			$update['status'][] = 'All outdated tables was removed from the database.';
+		}
 	}
 	
 	// write the new version number to the database
